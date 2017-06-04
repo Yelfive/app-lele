@@ -1,0 +1,12 @@
+{
+  "name": "fk/express",
+  "description": "Check expression with given post sn",
+  "autoload": {
+    "psr-4": {
+      "fk\\express\\": "src"
+    }
+  },
+  "require": {
+    "curl/curl": "*"
+  }
+}
