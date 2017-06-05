@@ -19,6 +19,11 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::put('user/logout', 'LogoutController@logout');
     });
 
+    Route::group(['namespace' => 'Friends'], function () {
+        Route::post('friends', 'AddController@add');
+        Route::get('friends', 'ListController@index');
+    });
+
 });
 
 Route::group(['middleware' => 'api'], function () {

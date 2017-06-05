@@ -122,11 +122,26 @@ http://39.108.76.218/api/
 - API: user/logout
 - Method: PUT
 - Login: Yes
+- Params: None
+- Result:
+
+    ```json
+    {
+      "code": 200,
+      "message": "注销成功"
+    }
+    ```
+
+## 5. 添加好友
+- API: friend
+- Method: POST
+- Login: Yes
 - Params:
 
     ```
     |   Field       |Required   |Default|Example|
     |---            |---        |---    |---
+    |friend_id      |Yes        |       |1
     ```
 
 - Result:
@@ -134,7 +149,48 @@ http://39.108.76.218/api/
     ```json
     {
       "code": 200,
-      "message": "注销成功"
+      "message": "添加好友成功"
+    }
+    ```
+
+## 6. 获取好友列表
+- API: friend
+- Method: GET
+- Login: Yes
+- Params:
+
+    ```
+    |   Field       |Required   |Default|Example|
+    |---            |---        |---    |---
+    |per_page       |No         |1000   |每页展示数量, 默认1000条
+    ```
+
+- Result:
+
+    ```json
+    {
+      "code": 200,
+      "message": "获取好友列表成功",
+      "list": [
+        {
+          "id": 3,
+          "friend_id": 1,
+          "friend_nickname": "Felix"
+        },
+        {
+          "id": 2,
+          "friend_id": 1,
+          "friend_nickname": "Felix"
+        }
+      ],
+      "pagination": {
+        "total": 2,
+        "per_page": 1000,
+        "current_page": 1,
+        "last_page": 1,
+        "from": 1,
+        "to": 2
+      }
     }
     ```
 

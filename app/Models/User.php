@@ -31,6 +31,9 @@ use Illuminate\Contracts\Auth\Authenticatable;
 class User extends Model implements Authenticatable
 {
 
+    const DELETED_NO = 0;
+    const DELETED_YES = 1;
+
     public $events = [
         'creating' => UserCreating::class
     ];
