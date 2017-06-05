@@ -32,4 +32,8 @@ Route::group(['middleware' => 'api'], function () {
         Route::put('user', 'LoginController@login');
         Route::post('user', 'RegisterController@register');
     });
+
+    Route::group(['namespace' => 'Supports'], function () {
+        Route::get('state/code', 'StateController@index');
+    });
 });

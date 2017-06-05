@@ -25,6 +25,7 @@ http://39.108.76.218/api/
 - API: user
 - Method: POST
 - Params:
+    - 见 [6. 获取国家代码接口](6.获取国家代码接口)
 
     ```
     |   Field       |Required   |Default|Example|
@@ -74,7 +75,7 @@ http://39.108.76.218/api/
     |password       |Y          |       | 123456
     ```
 
-- Result: [见用户注册](1.用户注册)
+- Result: 见 [1. 用户注册](1.用户注册)
 
     ```json
     {
@@ -100,7 +101,7 @@ http://39.108.76.218/api/
     |password       |Y          |       | 123456
     ```
 
-- Result: [见用户注册](1.用户注册)
+- Result: 见 [1. 用户注册](1.用户注册)
 
     ```json
     {
@@ -184,6 +185,40 @@ http://39.108.76.218/api/
         "last_page": 1,
         "from": 1,
         "to": 2
+      }
+    }
+    ```
+
+# 6. 获取国家代码接口
+
+- API: state/code
+- Login: No
+- Params: None
+- Result:
+
+    ```json
+    {
+      "code": 200,
+      "message": "获取国家/地区代码成功",
+      "list": [
+        {
+          "id": 15,
+          "name": "中国",
+          "code": "+86"
+        },
+        {
+          "id": 183,
+          "name": "图瓦卢",
+          "code": "+688"
+        }
+      ],
+      "pagination": {
+        "total": 183,
+        "per_page": 1000,
+        "current_page": 1,
+        "last_page": 1,
+        "from": 1,
+        "to": 183
       }
     }
     ```
