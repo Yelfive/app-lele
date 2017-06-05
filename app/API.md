@@ -46,6 +46,8 @@ http://39.108.76.218/api/
         "mobile": "13541013372",
         "state_code": "+86",
         "nickname": "Felix",
+        "im_account": "",
+        "im_password": "",
         "it_says": "",
         "address": "",
         "city_name": "5001",
@@ -69,12 +71,38 @@ http://39.108.76.218/api/
     |password       |Y          |       | 123456
     ```
 
-- Result:
+- Result: [见用户注册](1.用户注册)
 
     ```json
     {
       "code": 200,
-      "message": "注册成功",
+      "message": "登录成功",
+      "data": {
+        "...": "..."
+      },
+      "access_token": "KsBNIaxakS69WL9nItoG8ZP7hM9qOCu3FBOLz80s"
+    }
+    ```
+
+## 3. 获取用户资料
+- API: user
+- Method: GET
+- Login: Yes
+- Params:
+
+    ```
+    |   Field       |Required   |Default|Example|
+    |---            |---        |---    |---
+    |mobile         |Y          |       | 13512345678
+    |password       |Y          |       | 123456
+    ```
+
+- Result: [见用户注册](1.用户注册)
+
+    ```json
+    {
+      "code": 200,
+      "message": "获取用户信息成功",
       "data": {
         "id": 3,
         "mobile": "13541013372",
@@ -86,12 +114,11 @@ http://39.108.76.218/api/
         "city_code": "成都",
         "account": "10000213",
         "created_at": "2017-06-05 16:22:44"
-      },
-      "access_token": "KsBNIaxakS69WL9nItoG8ZP7hM9qOCu3FBOLz80s"
+      }
     }
     ```
 
-## 2. 用户注销
+## 4. 用户注销
 - API: user/logout
 - Method: PUT
 - Login: Yes
@@ -107,7 +134,7 @@ http://39.108.76.218/api/
     ```json
     {
       "code": 200,
-      "message": "注销成功",
+      "message": "注销成功"
     }
     ```
 

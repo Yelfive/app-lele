@@ -8,7 +8,7 @@ use App\Events\{
     ModelSaving, UserCreated, UserCreating, UserUpdated
 };
 use App\Listeners\{
-    CreateUserProfile, FillModel, UpdateIdentity, GenerateLeLeNo
+    CreateIMAccount, FillModel, UpdateIdentity, GenerateLeLeNo
 };
 
 class EventServiceProvider extends ServiceProvider
@@ -20,7 +20,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         UserCreated::class => [
-            CreateUserProfile::class,
+            CreateIMAccount::class
         ],
         ModelSaving::class => [
             FillModel::class,

@@ -19,6 +19,8 @@ class Init extends Migration
             $table->string('state_code', 10)->comment('State code, +86=china');
             $table->string('mobile', 11)->comment('Mobile phone number');
             $table->string('account', 20)->comment('User\\\'s LeLe Number');
+            $table->string('im_account')->default('')->comment('Login of the IM');
+            $table->string('im_password')->default('')->comment('Password of the IM');
             $table->enum('sex', ['unknown', 'male', 'female'])->default('unknown')->comment('user gender');
             $table->string('city_name')->comment('Register location, city name');
             $table->string('city_code')->comment('Register location, city code');

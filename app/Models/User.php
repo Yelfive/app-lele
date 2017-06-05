@@ -13,6 +13,8 @@ use Illuminate\Contracts\Auth\Authenticatable;
  * @property string $state_code State code, +86=china
  * @property string $mobile Mobile phone number
  * @property string $account User's LeLe Number
+ * @property string $im_account [Default ''] Login of the IM
+ * @property string $im_password [Default ''] Password of the IM
  * @property string $sex [Default 'unknown'] user gender
  * @property string $city_name Register location, city name
  * @property string $city_code Register location, city code
@@ -29,9 +31,9 @@ use Illuminate\Contracts\Auth\Authenticatable;
 class User extends Model implements Authenticatable
 {
 
-//    public $events = [
-//        'creating' => UserCreating::class
-//    ];
+    public $events = [
+        'creating' => UserCreating::class
+    ];
 
     /**
      * @var string Name of the table, without prefix
@@ -48,6 +50,8 @@ class User extends Model implements Authenticatable
             'sex' => ['string'],
             'city_name' => ['required', 'string', 'max:255'],
             'city_code' => ['required', 'string', 'max:255'],
+            'im_account' => ['string', 'max:255'],
+            'im_password' => ['string', 'max:255'],
             'age' => ['integer', 'min:0', 'max:255'],
             'it_says' => ['string', 'max:100000'],
             'address' => ['string', 'max:500'],
