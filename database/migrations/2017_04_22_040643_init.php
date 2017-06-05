@@ -18,6 +18,7 @@ class Init extends Migration
             $table->string('nickname', 50)->comment('User\\\'s nickname');
             $table->string('state_code', 10)->comment('State code, +86=china');
             $table->string('mobile', 11)->comment('Mobile phone number');
+            $table->string('avatar')->default('')->comment('Avatar for the user');
             $table->string('account', 20)->comment('User\\\'s LeLe Number');
             $table->string('im_account')->default('')->comment('Login of the IM');
             $table->string('im_password')->default('')->comment('Password of the IM');

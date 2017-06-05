@@ -12,6 +12,7 @@ use Illuminate\Contracts\Auth\Authenticatable;
  * @property string $nickname User's nickname
  * @property string $state_code State code, +86=china
  * @property string $mobile Mobile phone number
+ * @property string $avatar Avatar for the user
  * @property string $account User's LeLe Number
  * @property string $im_account [Default ''] Login of the IM
  * @property string $im_password [Default ''] Password of the IM
@@ -49,6 +50,7 @@ class User extends Model implements Authenticatable
             'nickname' => ['required', 'string', 'max:50'],
             'state_code' => ['required', 'string', 'max:10'],
             'mobile' => ['required', 'string', 'max:11', 'unique:user'],
+            'avatar' => ['required', 'string', 'max:255'],
             'account' => ['required', 'string', 'max:20'],
             'sex' => ['string'],
             'city_name' => ['required', 'string', 'max:255'],
