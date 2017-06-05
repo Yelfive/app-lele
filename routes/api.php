@@ -14,31 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::group(['middleware' => 'auth:api'], function () {
-    Route::get('user', 'UserController@profile')->name('user.profile');
-
-    // Top up
-    Route::get('top-up', 'TopUpController@history');
-    Route::post('top-up', 'TopUpController@charge');
-
-    // coupon
-    Route::get('coupon', 'CouponController@list');
-
-    Route::group(['namespace' => 'Pay'], function () {
-        Route::post('pay', 'PayController@pay');
+    Route::group(['namespace' => 'User'], function () {
+        Route::namespace('User')->get('user', 'ProfileController@profile')->name('user.profile');
     });
 
-    Route::get('express', 'ExpressController@query');
 });
 
 Route::group(['middleware' => 'api'], function () {
-    Route::group(['namespace' => 'Sinopec'], function () {
-        Route::post('indoor-buy/points', 'IndoorController@synchronizePoints');
-    });
-
-    Route::group(['namespace' => 'Pay'], function () {
-        Route::get('order/paid', 'PayController@checkOrderPaid');
-    });
-
     Route::group(['namespace' => 'Auth'], function () {
         // User
         Route::put('user', 'LoginController@login');

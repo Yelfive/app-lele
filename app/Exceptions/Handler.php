@@ -64,7 +64,8 @@ class Handler extends ExceptionHandler
             $result = ApiResult::instance()
                 ->code(HttpStatusCode::CLIENT_UNAUTHORIZED)
                 ->message(__('error.Unauthorized'));
-            return response()->json($result, HttpStatusCode::CLIENT_UNAUTHORIZED);
+
+            return response()->json($result, HttpStatusCode::getStatusCode(HttpStatusCode::CLIENT_UNAUTHORIZED));
         }
 
         return redirect()->guest(route('login'));
@@ -87,7 +88,7 @@ class Handler extends ExceptionHandler
                     ->code(HttpStatusCode::CLIENT_VALIDATION_ERROR)
                     ->extend($errors)
                     ->message(__('error.Validation failed'))
-                , HttpStatusCode::CLIENT_VALIDATION_ERROR
+                , HttpStatusCode::getStatusCode(HttpStatusCode::CLIENT_VALIDATION_ERROR)
             );
         }
 

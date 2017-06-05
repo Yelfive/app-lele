@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use fk\reference\IdeReferenceServiceProvider;
 use fk\utility\Auth\Session\SessionGuardServiceProvider;
+use fk\utility\Database\Console\Migrations\MigrateMakeServiceProvider;
 use fk\utility\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;

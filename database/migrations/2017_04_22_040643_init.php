@@ -15,12 +15,27 @@ class Init extends Migration
     {
         Schema::create('user', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 50)->comment('Real name of the user');
+            $table->string('nickname', 50)->comment('User\\\'s nickname');
+            $table->string('state_code', 10)->comment('State code, +86=china');
             $table->string('mobile', 11)->comment('Mobile phone number');
-            $table->string('address', 500)->comment('The address to send the gas card to');
+            $table->string('account', 20)->comment('User\\\'s LeLe Number');
+            $table->enum('sex', ['unknown', 'male', 'female'])->default('unknown')->comment('user gender');
+            $table->string('city_name')->comment('Register location, city name');
+            $table->string('city_code')->comment('Register location, city code');
+            $table->unsignedTinyInteger('age')->default(0);
+            $table->text('it_says')->comment('What he/she says');
+            $table->string('address', 500)->default(0)->comment('The address');
             $table->string('password_hash', 100)->comment('Hash of the password, not storing plain password in db');
             $table->timestamps();
             $table->unsignedTinyInteger('deleted')->default(0)->comment('Whether the user is deleted');
+        });
+
+        Schema::create('user_friends', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('created_by')->comment('Record creator, indicates whose friend this is');
+            $table->unsignedInteger('friend_id')->comment('User ID of the friend');
+            $table->string('friend_nickname')->default('')->comment('Nickname of the friend');
+            $table->timestamps();
         });
     }
 
@@ -32,5 +47,6 @@ class Init extends Migration
     public function down()
     {
         Schema::drop('user');
+        Schema::drop('user_friends');
     }
 }

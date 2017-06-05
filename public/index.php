@@ -25,54 +25,51 @@ use fk\helpers\{
 
 require __DIR__ . '/../bootstrap/autoload.php';
 
-(new Capture(
-    new FileWriter(__DIR__ . '/../storage/logs/request_capture.log'), true
-    , [
-        'route' => (new \fk\utility\Http\Request())->route(),
-    ]
-)
-)
-    ->capture(function () {
+$writer = new FileWriter(__DIR__ . '/../storage/logs/request_capture.log');
+$capture = new Capture($writer, true);
+$capture->capture();
 
+/*
+|--------------------------------------------------------------------------
+| Turn On The Lights
+|--------------------------------------------------------------------------
+|
+| We need to illuminate PHP development, so let us turn on the lights.d
+| This bootstraps the framework and gets it ready for use, then it
+| will load up this application so that we can run it and send
+| the responses back to the browser and delight our users.
+|
+*/
 
-        /*
-        |--------------------------------------------------------------------------
-        | Turn On The Lights
-        |--------------------------------------------------------------------------
-        |
-        | We need to illuminate PHP development, so let us turn on the lights.d
-        | This bootstraps the framework and gets it ready for use, then it
-        | will load up this application so that we can run it and send
-        | the responses back to the browser and delight our users.
-        |
-        */
+$app = require_once __DIR__ . '/../bootstrap/app.php';
 
-        $app = require_once __DIR__ . '/../bootstrap/app.php';
+/*
+|--------------------------------------------------------------------------
+| Run The Application
+|--------------------------------------------------------------------------
+|
+| Once we have the application, we can handle the incoming request
+| through the kernel, and send the associated response back to
+| the client's browser allowing them to enjoy the creative
+| and wonderful application we have prepared for them.
+|
+*/
 
-        /*
-        |--------------------------------------------------------------------------
-        | Run The Application
-        |--------------------------------------------------------------------------
-        |
-        | Once we have the application, we can handle the incoming request
-        | through the kernel, and send the associated response back to
-        | the client's browser allowing them to enjoy the creative
-        | and wonderful application we have prepared for them.
-        |
-        */
+/**
+ * @var \App\Http\Kernel $kernel
+ */
+$kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
-        /**
-         * @var \App\Http\Kernel $kernel
-         */
-        $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
+$response = $kernel->handle(
+    $request = \fk\utility\Http\Request::capture()
+);
 
-        $response = $kernel->handle(
-            $request = \fk\utility\Http\Request::capture()
-        );
+if ($request->expectsJson()) {
+    $response->header('Content-Type', 'application/json;charset=utf8');
+}
 
-        $response->send();
+$response->send();
 
-        $kernel->terminate($request, $response);
+$kernel->terminate($request, $response);
 
-        return $response->getContent();
-    });
+$capture->add(['response' => $response->getContent()]);

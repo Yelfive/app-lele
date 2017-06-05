@@ -7,6 +7,4 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['namespace' => 'Sinopec'], function () {
-    Route::any('test', 'TestController@index');
-});
+Route::any('test', 'TestController@index');

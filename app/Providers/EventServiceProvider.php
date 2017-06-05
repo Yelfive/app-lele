@@ -5,10 +5,10 @@ namespace App\Providers;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Events\{
-    ModelSaving, UserCreated, UserUpdated
+    ModelSaving, UserCreated, UserCreating, UserUpdated
 };
 use App\Listeners\{
-    CreateUserProfile, FillModel, UpdateIdentity
+    CreateUserProfile, FillModel, UpdateIdentity, GenerateLeLeNo
 };
 
 class EventServiceProvider extends ServiceProvider
@@ -27,6 +27,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         UserUpdated::class => [
             UpdateIdentity::class
+        ],
+        UserCreating::class => [
+            GenerateLeLeNo::class
         ]
     ];
 

@@ -14,6 +14,9 @@ use fk\http\StatusCode;
  */
 class HttpStatusCode extends StatusCode
 {
+
+    const ALWAYS_EXPECTS_OK = true;
+
     // Client error
     const CLIENT_INVALID_LOGIN = 421;
     const CLIENT_VALIDATION_ERROR = 422;

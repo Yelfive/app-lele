@@ -2,43 +2,36 @@
 
 namespace App\Models;
 
-use App\Components\SinopecApiEncapsulate;
-use Carbon\Carbon;
+use App\Events\UserCreating;
 use Illuminate\Contracts\Auth\Authenticatable;
-use Illuminate\Support\Facades\App;
-use App\Events\{
-    ModelSaving, UserCreated, UserUpdated
-};
 
 /**
  * Fields in the table `user`
  *
  * @property integer $id
- * @property string $name
- * @property string $idcard
- * @property string $mobile
+ * @property string $nickname User's nickname
+ * @property string $state_code State code, +86=china
+ * @property string $mobile Mobile phone number
+ * @property string $account User's LeLe Number
+ * @property string $sex [Default 'unknown'] user gender
+ * @property string $city_name Register location, city name
+ * @property string $city_code Register location, city code
+ * @property integer $age [Default 0]
+ * @property string $it_says What he/she says
  * @property string $address
- * @property integer $gas_card_id
- * @property integer $created_at
- * @property integer $updated_at
- * @property integer $deleted
- * @property string $gas_card_sn
- * @property string $password_hash
+ * @property string $password_hash Hash of the password, not storing plain password in db
+ * @property \Carbon\Carbon $created_at
+ * @property \Carbon\Carbon $updated_at
+ * @property integer $deleted [Default 0] Whether the user is deleted
  *
- * @property UserInfo $info
- * @property TpIndoorBuy|null $indoorBuy
- * @property UserCoupon|null $m_point
+ *
  */
 class User extends Model implements Authenticatable
 {
 
-    const CREATED_BY = null;
-
-    protected $events = [
-        'creating' => ModelSaving::class,
-        'created' => UserCreated::class,
-        'updated' => UserUpdated::class
-    ];
+//    public $events = [
+//        'creating' => UserCreating::class
+//    ];
 
     /**
      * @var string Name of the table, without prefix
@@ -47,29 +40,118 @@ class User extends Model implements Authenticatable
 
     public function rules()
     {
-        // todo: add field: `locked`
         return [
-            'name' => ['string', 'max:50'],
-            'idcard' => ['string', 'max:18'],
-            'mobile' => ['string', 'max:11'],
+            'nickname' => ['required', 'string', 'max:50'],
+            'state_code' => ['required', 'string', 'max:10'],
+            'mobile' => ['required', 'string', 'max:11', 'unique:user'],
+            'account' => ['required', 'string', 'max:20'],
+            'sex' => ['string'],
+            'city_name' => ['required', 'string', 'max:255'],
+            'city_code' => ['required', 'string', 'max:255'],
+            'age' => ['integer', 'min:0', 'max:255'],
+            'it_says' => ['string', 'max:100000'],
             'address' => ['string', 'max:500'],
-            'gas_card_id' => ['integer', 'min:0', 'max:4294967295'],
+            'password_hash' => ['required', 'string', 'max:100'],
             'created_at' => ['date'],
             'updated_at' => ['date'],
             'deleted' => ['integer', 'min:0', 'max:255'],
-            'gas_card_sn' => ['string', 'max:20'],
-            'password_hash' => ['string', 'max:100'],
         ];
     }
 
-    public function info()
+    public function generateAccount(int $base = null)
     {
-        return $this->hasOne(UserInfo::class, 'id');
+        $base = $base ?: $this->findBase();
+        while (true) {
+            if (!$this->skipAccount(++$base)) {
+                break;
+            }
+        }
+        return (string)$base;
     }
 
-    public function indoorBuy()
+    public function setAccount()
     {
-        return $this->hasOne(TpIndoorBuy::class, 'created_by');
+        $this->account = $this->generateAccount();
+        return $this;
+    }
+
+    protected function skipAccount($number)
+    {
+        // same num repeated over 5/8 times
+        // serial number like 12345xxx over 5/8 numbers
+        // 11111000 11110001 11100011 11100000
+        $percent = 5 / 8;
+        $number = (string)$number;
+        str_split($number, 1);
+        $len = strlen($number);
+        $maxAllowed = floor($len * $percent);
+
+        // Check repeat
+        $repeat = [];
+        for ($i = 0; $i < $len; $i++) {
+            $v = $number[$i];
+            if (!isset($repeat[$v])) $repeat[$v] = 0;
+            if (++$repeat[$v] >= $maxAllowed) {
+                return true;
+            }
+        }
+
+        // Check multi-bytes repeat
+        // 10101010 12121212 12312312
+        $splitLen = 2;
+        $maxSplitLength = floor($len / 2);
+        if ($maxSplitLength >= $splitLen) {
+            $skip = true;
+            $maxAllowedRepeat = $maxSplitLength - 1;
+            $repeat = 1;
+            for (; $splitLen <= $maxSplitLength; $splitLen++) {
+                $array = str_split($number, $splitLen);
+                $prev = array_shift($array);
+                while ($next = array_shift($array)) {
+                    if ($prev != $next) {
+                        $skip = false;
+                        break;
+                    }
+
+                    if (++$repeat >= $maxAllowedRepeat) {
+                        return true;
+                    }
+                }
+                if ($skip) return $skip;
+            }
+        }
+
+        // Check continuous
+        // 12345678
+        $continued = 1;
+        $ascend = true;
+        for ($i = 2; $i < $len - 1; $i++) {
+            $next = $number[$i];
+            $prev = $number[$i - 1];
+            if ($next == $prev + 1) {
+                $ascend = true;
+                if ($ascend === false) {
+                    $continued = 0;
+                    $ascend = false;
+                }
+            } else if ($next == $prev - 1) {
+                if ($ascend === true) {
+                    $continued = 0;
+                }
+            }
+
+            if (++$continued > $maxAllowed) {
+                return true;
+            }
+
+        }
+
+        return false;
+    }
+
+    protected function findBase()
+    {
+        return User::orderBy('id', 'DESC')->take(1)->pluck('account')->first() ?: ('1' . str_repeat('0', 7));
     }
 
     /**
@@ -79,14 +161,13 @@ class User extends Model implements Authenticatable
      */
     public function getAuthIdentifierName()
     {
-        // TODO: Implement getAuthIdentifierName() method.
+        return 'id';
     }
 
     /**
      * Get the unique identifier for the user.
-     * @see Auth::id()
-     * @see \Illuminate\Auth\GuardHelpers::id()
-     * @return mixed
+     *
+     * @return int
      */
     public function getAuthIdentifier()
     {
@@ -95,7 +176,6 @@ class User extends Model implements Authenticatable
 
     /**
      * Get the password for the user.
-     * Used to check password hash against user input
      *
      * @return string
      */
@@ -134,99 +214,4 @@ class User extends Model implements Authenticatable
     {
         // TODO: Implement getRememberTokenName() method.
     }
-
-    public function getExpressStatus()
-    {
-        $sn = Order::where('belongs_to', $this->id)
-            ->where('status', '>=', Order::STATUS_SUCCESS)
-            ->orderBy('id', 'desc')
-            ->take(1)
-            ->pluck('express_sn');
-        $status = $sn === null ? -1 : ($sn === '' ? 0 : 1);
-        return $status;
-    }
-
-    public function getProfile()
-    {
-        $data = $this->getAttributes(null, ['password_hash']);
-        $data['express_status'] = $this->getExpressStatus();
-        $data['coupons'] = $this->getCoupons();
-        return $data;
-    }
-
-    protected function getCoupons()
-    {
-        return [
-            $this->updateIndoorMPoint()
-        ];
-    }
-
-    protected function updateIndoorMPoint()
-    {
-        $points = ['coupon_id' => Coupon::ID_M_POINT, 'coupon_num' => 0];;
-        /** @var SinopecApiEncapsulate $sinopec */
-        $sinopec = App::make(SinopecApiEncapsulate::class);
-        $response = $sinopec->memberQuery($this->mobile);
-
-//        $response = [
-//            'code' => 100,
-//            'data' => [
-//                'balance' => 90,
-//            ],
-//        ];
-        if (!$response
-            || !isset($response['code'])
-            || $response['code'] != 100
-            || !isset($response['data']['balance'])
-        ) {
-            // TODO: log the failure, request and response
-            return $points;
-        }
-        $pointBalance = $response['data']['balance'];
-
-        /** @var Coupon $coupon */
-        $coupon = Coupon::where('id', Coupon::ID_M_POINT)->first();
-        $num = intval($pointBalance / $coupon->coupon_value);
-
-        /** @var UserCoupon|null $mPoint */
-        if (null == $mPoint = $this->m_point) {
-            if (!$coupon) return false;
-            $datetime = new Carbon();
-            $mPoint = UserCoupon::create([
-                'coupon_id' => Coupon::ID_M_POINT,
-                'coupon_value' => $coupon->coupon_value,
-                'belongs_to' => $this->id,
-                'num' => $num,
-                'got_at' => $datetime,
-                'expires_at' => $datetime,
-            ]);
-            if (!$mPoint->hasErrors()) $points['coupon_num'] = $num;
-            else var_dump($mPoint->errors);
-
-            return $points;
-        } else if ($mPoint->num != $num) {
-            if ($mPoint->num > $num) {
-                CouponTransaction::add(
-                    '帮麦使用优惠券',
-                    $coupon->id, $coupon->coupon_value, $mPoint->num - $num,
-                    CouponTransaction::CREATED_FOR_SPENDING, 0
-                );
-            } else {
-                CouponTransaction::add(
-                    '帮麦消费返券',
-                    $coupon->id, $coupon->coupon_value, $num - $mPoint->num,
-                    CouponTransaction::CREATED_FOR_GETTING, 0
-                );
-            }
-            $mPoint->update(['num' => $num]);
-        }
-        $points['coupon_num'] = $num;
-        return $points;
-    }
-
-    public function m_point()
-    {
-        return $this->hasOne(UserCoupon::class, 'belongs_to', 'id');
-    }
-
 }

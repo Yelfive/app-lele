@@ -15,7 +15,7 @@ class ApiResponse extends Response
     {
         parent::__construct($result, $status, $headers);
         if ($result instanceof ApiResult) {
-            $this->setStatusCode($result->code);
+            $this->setStatusCode(HttpStatusCode::SUCCESS_OK);
         }
     }
 }
