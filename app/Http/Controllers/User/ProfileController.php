@@ -18,4 +18,5 @@ class ProfileController extends ApiController
             ->message('获取用户信息成功')
             ->data(Auth::user()->getProfile());
     }
+
 }

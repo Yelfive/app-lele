@@ -15,7 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['namespace' => 'User'], function () {
-        Route::namespace('User')->get('user', 'ProfileController@profile')->name('user.profile');
+        Route::get('user', 'ProfileController@profile')->name('user.profile');
+        Route::put('user/logout', 'LogoutController@logout');
     });
 
 });

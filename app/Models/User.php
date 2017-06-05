@@ -214,4 +214,10 @@ class User extends Model implements Authenticatable
     {
         // TODO: Implement getRememberTokenName() method.
     }
+
+    public function getProfile()
+    {
+        $attributes = $this->getAttributes(null, ['password_hash', 'deleted', 'updated_at']);
+        return $attributes;
+    }
 }
