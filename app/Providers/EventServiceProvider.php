@@ -19,9 +19,6 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        UserCreated::class => [
-            CreateIMAccount::class
-        ],
         ModelSaving::class => [
             FillModel::class,
         ],
@@ -29,7 +26,8 @@ class EventServiceProvider extends ServiceProvider
             UpdateIdentity::class
         ],
         UserCreating::class => [
-            GenerateLeLeNo::class
+            GenerateLeLeNo::class,
+            CreateIMAccount::class
         ]
     ];
 

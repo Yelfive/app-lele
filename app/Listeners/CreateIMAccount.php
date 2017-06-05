@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\UserCreated;
+use App\Events\UserCreating;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -19,13 +20,12 @@ class CreateIMAccount
     /**
      * Handle the event.
      *
-     * @param  UserCreated $event
-     * @return void
+     * @param UserCreating $event
      */
-    public function handle(UserCreated $event)
+    public function handle(UserCreating $event)
     {
         $user = $event->user;
-        $user->im_account = '';
-        $user->im_password = '';
+        $user->im_account = '123';
+        $user->im_password = 'abc';
     }
 }

@@ -26,7 +26,7 @@ class GenerateLeLeNo
      */
     public function handle(UserCreating $event)
     {
-        $user = $event->model;
+        $user = $event->user;
 
         $user->account = $user->generateAccount();
         if (null === $user->it_says) $user->it_says = '';

@@ -42,18 +42,21 @@ http://39.108.76.218/api/
       "code": 200,
       "message": "注册成功",
       "data": {
-        "id": 3,
-        "mobile": "13541013372",
-        "state_code": "+86",
+        "id": 1,
         "nickname": "Felix",
+        "state_code": "+86",
+        "mobile": "13541013376",
+        "avatar": "",
+        "account": "10000211",
         "im_account": "",
         "im_password": "",
-        "it_says": "",
-        "address": "",
+        "sex": "unknown",
         "city_name": "5001",
         "city_code": "成都",
-        "account": "10000213",
-        "created_at": "2017-06-05 16:22:44"
+        "age": 0,
+        "it_says": "",
+        "address": "",
+        "created_at": "2017-06-05 22:19:29"
       },
       "access_token": "KsBNIaxakS69WL9nItoG8ZP7hM9qOCu3FBOLz80s"
     }
@@ -104,16 +107,7 @@ http://39.108.76.218/api/
       "code": 200,
       "message": "获取用户信息成功",
       "data": {
-        "id": 3,
-        "mobile": "13541013372",
-        "state_code": "+86",
-        "nickname": "Felix",
-        "it_says": "",
-        "address": "",
-        "city_name": "5001",
-        "city_code": "成都",
-        "account": "10000213",
-        "created_at": "2017-06-05 16:22:44"
+        "...": "..."
       }
     }
     ```

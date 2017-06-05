@@ -18,7 +18,7 @@ class UserCreating
     /**
      * @var User
      */
-    public $model;
+    public $user;
 
     /**
      * Create a new event instance.
@@ -26,7 +26,7 @@ class UserCreating
      */
     public function __construct(User $user)
     {
-        $this->model = $user;
+        $this->user = $user;
     }
 
     /**
