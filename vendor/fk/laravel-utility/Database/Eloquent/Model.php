@@ -7,11 +7,18 @@
 
 namespace fk\utility\Database\Eloquent;
 
+use DateTimeInterface;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 
 class Model extends \Illuminate\Database\Eloquent\Model
 {
+
+    /**
+     * @var bool
+     * @see dateAsInteger()
+     */
+    protected static $serializeDateAsInteger = false;
 
     /**
      * @var null|MessageBag
@@ -98,5 +105,32 @@ class Model extends \Illuminate\Database\Eloquent\Model
     public function newEloquentBuilder($query)
     {
         return new Builder($query);
+    }
+
+    /**
+     * Calling this method will cause all
+     *  - $this->dates
+     *  - static::CREATED_AT
+     *  - static::UPDATED_AT
+     * to be serialized as integer timestamp
+     * @see \Illuminate\Database\Eloquent\Model::getDates
+     * @see $dateAsInteger
+     *
+     * @param bool $asInteger
+     * @return $this
+     */
+    public function dateAsInteger(bool $asInteger = true)
+    {
+        static::$serializeDateAsInteger = $asInteger;
+        return $this;
+    }
+
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        if (static::$serializeDateAsInteger) {
+            return $date->getTimestamp();
+        } else {
+            return parent::serializeDate($date);
+        }
     }
 }
