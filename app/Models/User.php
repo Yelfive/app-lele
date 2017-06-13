@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Events\UserCreated;
 use App\Events\UserCreating;
+use fk\ease\mob\Hash;
 use Illuminate\Contracts\Auth\Authenticatable;
 
 /**
@@ -36,7 +38,8 @@ class User extends Model implements Authenticatable
     const DELETED_YES = 1;
 
     public $events = [
-        'creating' => UserCreating::class
+        'creating' => UserCreating::class,
+        'created' => UserCreated::class
     ];
 
     /**
@@ -50,8 +53,8 @@ class User extends Model implements Authenticatable
             'nickname' => ['required', 'string', 'max:50'],
             'state_code' => ['required', 'string', 'max:10'],
             'mobile' => ['required', 'string', 'max:11', 'unique:user'],
-            'avatar' => ['required', 'string', 'max:255'],
-            'account' => ['required', 'string', 'max:20'],
+            'avatar' => ['string', 'max:255'],
+            'account' => ['required', 'string', 'max:20', 'unique:user'],
             'sex' => ['string'],
             'city_name' => ['required', 'string', 'max:255'],
             'city_code' => ['required', 'string', 'max:255'],
@@ -229,5 +232,27 @@ class User extends Model implements Authenticatable
         $attributes = $this->getAttributes(null, ['password_hash', 'deleted', 'updated_at']);
         $attributes['created_at'] = strtotime($attributes['created_at']);
         return $attributes;
+    }
+
+    public function generateIMAccount()
+    {
+        $this->im_account = $this->hashIMAccount();
+        $this->im_password = $this->hashPassword();
+    }
+
+    public function hashIMAccount($id = null)
+    {
+        if (!$id) $id = $this->id;
+        return md5(sha1($id)) . $id;
+    }
+
+    public function hashPassword($createdAt = null)
+    {
+        return md5($createdAt ?: $this->created_at);
+    }
+
+    public function getAvatar()
+    {
+        return storage_path("app/images/avatar/{$this->avatar}");
     }
 }

@@ -27,8 +27,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         UserCreating::class => [
             GenerateLeLeNo::class,
+        ],
+        UserCreated::class => [
             CreateIMAccount::class
-        ]
+        ],
     ];
 
     /**

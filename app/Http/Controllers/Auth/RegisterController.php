@@ -16,17 +16,26 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends ApiController
 {
     use RegistersUsers;
 
+    /**
+     * @var Request
+     */
+    protected $request;
+
     protected function validator($data)
     {
         return Validator::make($data, [
             'mobile' => 'required|string|size:11',
             'password' => 'required|string|min:6',
+            'avatar' => 'file',
+            'state_code' => 'integer',
+            'age' => 'integer|min:1|max:200'
         ]);
     }
 
@@ -46,14 +55,17 @@ class RegisterController extends ApiController
             'password_hash' => Hash::make($data['password']),
             'it_says' => '',
             'address' => '',
-            'city_name' => $cityCode,
-            'city_code' => $cityName,
+            'avatar' => '',
+            'city_name' => $cityName,
+            'city_code' => $cityCode,
         ]));
 
         $user->setAccount();
 
         if ($user->validate() && $user->save()) {
-            $this->result->message('注册成功')
+            $user->update(['avatar' => $this->uploadAvatar($user->im_account)]);
+            $this->result
+                ->message('注册成功')
                 ->data($user->getProfile());
         } else {
             $this->result->code(HttpStatusCode::CLIENT_VALIDATION_ERROR)
@@ -61,6 +73,17 @@ class RegisterController extends ApiController
                 ->extend(['errors' => $user->errors->toArray()]);
         }
         return $user;
+    }
+
+    /**
+     * @param string $as
+     * @return string Relative path to `/storage`
+     */
+    protected function uploadAvatar($as)
+    {
+        $uploadedFile = $this->request->file('avatar');
+        $filename = $uploadedFile->storeAs('images/avatar', $as . '.' . $uploadedFile->extension());
+        return basename($filename);
     }
 
     /**
@@ -72,6 +95,7 @@ class RegisterController extends ApiController
      */
     public function register(Request $request)
     {
+        $this->request = $request;
         $this->validator($request->all())->validate();
 
         $user = $this->create($request->all());

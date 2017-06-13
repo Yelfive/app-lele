@@ -17,9 +17,9 @@ class Init extends Migration
             $table->increments('id');
             $table->string('nickname', 50)->comment('User\\\'s nickname');
             $table->string('state_code', 10)->comment('State code, +86=china');
-            $table->string('mobile', 11)->comment('Mobile phone number');
+            $table->string('mobile', 11)->comment('Mobile phone number')->unique();
             $table->string('avatar')->default('')->comment('Avatar for the user');
-            $table->string('account', 20)->comment('User\\\'s LeLe Number');
+            $table->string('account', 20)->comment('User\\\'s LeLe Number')->unique();
             $table->string('im_account')->default('')->comment('Login of the IM');
             $table->string('im_password')->default('')->comment('Password of the IM');
             $table->enum('sex', ['unknown', 'male', 'female'])->default('unknown')->comment('user gender');

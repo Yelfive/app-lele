@@ -14,6 +14,7 @@ return array(
     'fk\\http\\' => array($vendorDir . '/fk/http-status/src'),
     'fk\\helpers\\' => array($vendorDir . '/fk/helpers/src'),
     'fk\\express\\' => array($vendorDir . '/fk/express/src'),
+    'fk\\ease\\mob\\' => array($vendorDir . '/fk/ease-mob/src'),
     'Zend\\Diactoros\\' => array($vendorDir . '/zendframework/zend-diactoros/src'),
     'XdgBaseDir\\' => array($vendorDir . '/dnoegel/php-xdg-base-dir/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),

@@ -9,6 +9,7 @@
         "barryvdh/laravel-ide-helper": "^2.3",
         "curl/curl": "^1.6",
         "doctrine/dbal": "^2.5",
+        "fk/ease-mob": "dev-master",
         "fk/express": "dev-master",
         "fk/helpers": "dev-master",
         "fk/http-status": "dev-master",

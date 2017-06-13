@@ -31,11 +31,11 @@ return [
         [
             'return' => \Illuminate\Routing\RouteRegistrar::class,
             'methods' => ['as', 'domain', 'middleware', 'name', 'namespace', 'prefix'],
-            // 'parameters' => [[type, name]],
             'parameters' => [['mixed', '$value']],
         ],
     ],
     \Illuminate\Database\Eloquent\Model::class => \Illuminate\Database\Eloquent\Builder::class,
     \Illuminate\Database\Eloquent\Builder::class => \Illuminate\Database\Query\Builder::class,
     \Illuminate\Database\DatabaseManager::class => \Illuminate\Database\Connection::class,
+    \Illuminate\Cache\CacheManager::class => \Illuminate\Contracts\Cache\Repository::class
 ];

@@ -5005,5 +5005,34 @@
         },
         "notification-url": "https://packagist.org/downloads/",
         "description": "Common helpers for php"
+    },
+    {
+        "name": "fk/ease-mob",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Yelfive/fk-ease-mob.git",
+            "reference": "956dc61a942d332f5f95376e10c762732776c072"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/Yelfive/fk-ease-mob/956dc61a942d332f5f95376e10c762732776c072.zip",
+            "reference": "956dc61a942d332f5f95376e10c762732776c072",
+            "shasum": ""
+        },
+        "require": {
+            "curl/curl": "*",
+            "php": ">=7"
+        },
+        "time": "2017-06-11T01:01:49+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "fk\\ease\\mob\\": "./src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/"
     }
 ]
