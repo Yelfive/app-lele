@@ -17,7 +17,8 @@
         "fk/laravel-utility": "dev-master",
         "fk/pay": "dev-master",
         "laravel/framework": "5.4.*",
-        "laravel/tinker": "~1.0"
+        "laravel/tinker": "~1.0",
+        "mongodb/mongodb": "^1.2@dev"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
