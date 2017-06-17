@@ -20,12 +20,11 @@ http://39.108.76.218/api/
 - API: user
 - Method: POST
 - Params:
-    - 见 [6. 获取国家代码接口](#6-获取国家代码接口)
 
     |   Field       |Required   |Default|Example
     |---            |---        |---    |---
     |mobile         |Y          |       | 13512345678
-    |state_code     |Y          |       | +86
+    |state_code     |Y          |       | +86 见 [6. 获取国家代码接口](#6-获取国家代码接口)
     |password       |Y          |       | 123456
     |nickname       |Y          |       | Felix
 
@@ -61,12 +60,10 @@ http://39.108.76.218/api/
 - Method: PUT
 - Params:
 
-    ```
-    |   Field       |Required   |Default|Example|
+    |   Field       |Required   |Default|Example
     |---            |---        |---    |---
     |mobile         |Y          |       | 13512345678
     |password       |Y          |       | 123456
-    ```
 
 - Result: 见 [1. 用户注册](#1-用户注册)
 
@@ -87,12 +84,10 @@ http://39.108.76.218/api/
 - Login: Yes
 - Params:
 
-    ```
-    |   Field       |Required   |Default|Example|
+    |Field          |Required   |Default|Example
     |---            |---        |---    |---
     |mobile         |Y          |       | 13512345678
     |password       |Y          |       | 123456
-    ```
 
 - Result: 见 [1. 用户注册](#1-用户注册)
 
@@ -126,11 +121,9 @@ http://39.108.76.218/api/
 - Login: Yes
 - Params:
 
-    ```
-    |   Field       |Required   |Default|Example|
+    |Field          |Required   |Default|Example
     |---            |---        |---    |---
     |friend_id      |Yes        |       |1
-    ```
 
 - Result:
 
@@ -147,11 +140,9 @@ http://39.108.76.218/api/
 - Login: Yes
 - Params:
 
-    ```
-    |   Field       |Required   |Default|Example|
+    |   Field       |Required   |Default|Example
     |---            |---        |---    |---
     |per_page       |No         |1000   |每页展示数量, 默认1000条
-    ```
 
 - Result:
 
