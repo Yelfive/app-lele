@@ -1,0 +1,67 @@
+version: '2'
+services:
+    php-1:
+        container_name: 'php-1'
+        build: ./php
+        volumes:
+            - ./php/php.ini/:/usr/local/etc/php/php.ini:ro
+        volumes_from:
+            - files-ali
+        env_file:
+            - ./php/.env
+        expose: # TODO
+            - 9000
+        ports:
+            - '9000:9000'
+        links:
+            - mysql-master
+            - redis
+
+    nginx-master:
+        container_name: 'nginx-master'
+        build: ./nginx
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+            - ./nginx/conf.d:/etc/nginx/conf.d:ro
+        volumes_from:
+            - files-ali
+        ports:
+            - '80:80'
+            - '443:443'
+        links:
+            - php-1
+    mysql-master:
+        container_name: mysql-master
+        build: ./mysql
+        volumes:
+            - ./mysql/master.d:/etc/mysql/conf.d:ro
+            - ./mysql/my.cnf:/etc/mysql/my.cnf:ro
+        ports:
+            - '3306:3306'
+        env_file:
+            - ./mysql/.env
+    mysql-slave:
+        container_name: mysql-slave-1
+        build: ./mysql
+        volumes:
+            - ./mysql/slave.d:/etc/mysql/conf.d:ro
+        ports:
+            - '3307:3306'
+        env_file:
+            - ./mysql/.env
+    redis:
+        container_name: redis
+        build: ./redis
+        ports:
+          - '6379:6379'
+
+    files-ali:
+        image: busybox
+        container_name: files-ali
+        volumes:
+            - /Users/felix/projects/ali:/var/www/html:rw
+
+# TODO: links from nginx to php cgi to avoid expose port to host: Mac may not be able to do so
+# TODO: mysql
+# TODO: mysql master-slave
+# TODO: php-fpm: containers user id and group is not root, while mysql is
