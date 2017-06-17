@@ -1,0 +1,52 @@
+version: '2'
+services:
+  php:
+    build: ./docker/php
+    volumes:
+      - ./docker/php/php.ini:/usr/local/etc/php/php.ini:ro
+    volumes_from:
+      - files-ali
+    env_file:
+      - ./docker/php/.env
+    expose:
+      - 9000
+    links:
+      - mysql
+      - redis
+      - mongo
+  nginx:
+    build: ./docker/nginx
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d:ro
+    volumes_from:
+      - files-ali
+    ports:
+      - '80:80'
+      - '443:443'
+    links:
+      - php
+  mysql:
+    image: mariadb
+    volumes:
+      # cannot mount this file, system error: not a directory
+      # - ./mysql/my.cnf:/etc/mysql/my.cnf
+      - ./docker/mysql/master.d:/etc/mysql/conf.d:ro
+      - ./docker/mysql/data:/var/lib/shared_data:rw
+    ports:
+      - '3306:3306'
+    env_file:
+      - ./docker/mysql/.env
+  redis:
+    build: ./docker/redis
+    volumes:
+     - ./docker/redis/data:/data:rw
+     - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf:ro
+
+  files-ali:
+    image: busybox
+    volumes:
+      - .:/var/www/html:rw
+  mongo:
+    image: mongo
+

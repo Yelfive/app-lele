@@ -5,7 +5,7 @@
 .idea
 Homestead.json
 Homestead.yaml
-.env
+/.env
 npm-debug
 .DS_Store
 TestController.php
