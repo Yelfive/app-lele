@@ -22,14 +22,12 @@ http://39.108.76.218/api/
 - Params:
     - 见 [6. 获取国家代码接口](#6-获取国家代码接口)
 
-    ```
-    |   Field       |Required   |Default|Example|
+    |   Field       |Required   |Default|Example
     |---            |---        |---    |---
     |mobile         |Y          |       | 13512345678
     |state_code     |Y          |       | +86
     |password       |Y          |       | 123456
     |nickname       |Y          |       | Felix
-    ```
 
 - Result:
 
@@ -241,7 +239,3 @@ http://39.108.76.218/api/
 - `last_page` 最后一页页码
 - `from` 当前页第一条编号, e.g. from=1 第一条
 - `to` 当前页最后一条编号, e.g. from=20 第二十条
-
-a|b
--|-
-aa|bb
