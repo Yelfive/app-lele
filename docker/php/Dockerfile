@@ -1,8 +1,9 @@
-FROM php:7-fpm
+FROM php:7.1.5-fpm
 MAINTAINER Felix Huang <yelfivehuang@gmail.com>
 
 # install extensions of php
 RUN apt-get update && apt-get install -y \
+	libssl-dev \
         apt-utils \
         libfreetype6-dev \
         libxslt1-dev \
