@@ -53,6 +53,8 @@ http://39.108.76.218/api/
     |state_code     |Y          |       | +86 见 [6. 获取国家代码接口](#6-获取国家代码接口)
     |password       |Y          |       | 123456
     |nickname       |Y          |       | Felix
+    |sex            |N          |unknown| male=男,female=女
+    |address        |N          |       | 生活地区
 
 - Result:
 
