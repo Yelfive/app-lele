@@ -55,6 +55,7 @@ http://39.108.76.218/api/
     |nickname       |Y          |       | Felix
     |sex            |N          |unknown| male=男,female=女
     |address        |N          |       | 生活地区
+    |avatar         |N          |       | 用户头像
 
 - Result:
 
