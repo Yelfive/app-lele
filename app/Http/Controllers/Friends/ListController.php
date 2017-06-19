@@ -10,7 +10,7 @@ namespace App\Http\Controllers\Friends;
 use App\Http\Controllers\ApiController;
 use App\Models\Model;
 use fk\utility\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
+use fk\utility\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 
 class ListController extends ApiController
@@ -24,11 +24,10 @@ class ListController extends ApiController
             ->leftJoin('user as u', 'u.id', '=', 'uf.created_by')
             ->orderBy('uf.id', 'DESC')
             ->paginate($request->get('per_page', 1000), $this->listFields());
-        $extend = Model::formatPaginate($paginator);
 
         $this->result
             ->message('获取好友列表成功')
-            ->extend($extend);
+            ->extend($paginator->toFKStyle());
     }
 
     protected function listFields()
