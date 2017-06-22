@@ -11,12 +11,28 @@ Making laravel more practical
         <?php
 
         use fk\utility\Database\Eloquent\Model;
+        /** @var  \fk\utility\Database\Eloquent\Builder $model */
         $model = Model::find(1);
         $model->rawSql();
         // or simply call, witch applies the __toString method
         echo $model;
         ```
         In fact, it works for any method that returns a `fk\utility\Database\Eloquent\Builder`
+
+    - Modify pagination
+        - add access to custom fields when calling `toArray`
+        - add access to `toFKStyle`
+    - Model::select related
+
+        > Being able to using alias like following,
+            see `\fk\utility\Database\Query\Builder::select` for more
+
+        ```php
+        <?php
+
+          \fk\utility\Database\Eloquent\Model::select(['alias' => ['fields']]);
+        ```
+
 #### Request
 
 - Class

@@ -8,8 +8,6 @@
 namespace App\Models;
 
 use fk\utility\Database\Eloquent\Model as ModelBase;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Arr;
 
 class Model extends ModelBase
 {
