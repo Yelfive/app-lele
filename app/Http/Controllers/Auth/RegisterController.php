@@ -33,6 +33,7 @@ class RegisterController extends ApiController
         return Validator::make($data, [
             'mobile' => 'required|string|size:11',
             'password' => 'required|string|min:6',
+            'verify_code' => 'required|string|size:6',
             'avatar' => 'file',
             'state_code' => 'integer',
             'age' => 'integer|min:1|max:200',
@@ -49,8 +50,19 @@ class RegisterController extends ApiController
         ];
     }
 
+    protected function checkVerifyCode()
+    {
+        // TODO: unfinished
+        return true;
+    }
+
     protected function create($data)
     {
+        if (!$this->checkVerifyCode()) {
+            return $this->result
+                ->code(HttpStatusCode::CLIENT_VALIDATION_ERROR)
+                ->message('短信验证码不正确');
+        }
         list ($cityCode, $cityName) = $this->getCity();
         /** @var User $user */
         $user = new User(array_merge($data, [

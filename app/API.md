@@ -50,8 +50,8 @@ http://39.108.76.218/api/
     |   Field       |Required   |Default|Example
     |---            |---        |---    |---
     |mobile         |Y          |       | 13512345678
-    |state_code     |Y          |       | +86 见 [6. 获取国家代码接口](#6-获取国家代码接口)
-    |password       |Y          |       | 123456
+    |password       |Y          |       | 111111
+    |verify_code    |Y          |       | 123456, 六位数验证码
     |nickname       |Y          |       | Felix
     |sex            |N          |unknown| male=男,female=女
     |address        |N          |       | 生活地区
