@@ -35,7 +35,9 @@ class RegisterController extends ApiController
             'password' => 'required|string|min:6',
             'avatar' => 'file',
             'state_code' => 'integer',
-            'age' => 'integer|min:1|max:200'
+            'age' => 'integer|min:1|max:200',
+            'address' => 'string',
+            'it_says' => 'string',
         ]);
     }
 
@@ -53,8 +55,9 @@ class RegisterController extends ApiController
         /** @var User $user */
         $user = new User(array_merge($data, [
             'password_hash' => Hash::make($data['password']),
-            'it_says' => '',
-            'address' => '',
+            'it_says' => $this->request->input('it_says'),
+            'sex' => $this->request->input('sex'),
+            'address' => $this->request->input('address'),
             'avatar' => '',
             'city_name' => $cityName,
             'city_code' => $cityCode,
