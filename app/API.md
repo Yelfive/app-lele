@@ -205,6 +205,7 @@ http://39.108.76.218/api/
 # 6. 获取国家代码接口
 
 - API: state/code
+- Method: GET
 - Login: No
 - Params: None
 - Result:
@@ -233,5 +234,51 @@ http://39.108.76.218/api/
         "from": 1,
         "to": 183
       }
+    }
+    ```
+
+# 7. 获取短信验证码
+
+- API: verify-code/sms
+- Method: GET
+- Login: No
+- Params: 
+
+    |Field          |Required   |Default|Example
+    |---            |---        |---    |---
+    |mobile         |Yes        |       |13541013333
+
+- Result:
+
+    ```json
+    {
+        "code": 200,
+        "message": "验证码获取成功"
+    }
+    ```
+
+# 8. 修改/重置密码
+
+- API: user/{user_id}/password
+
+    > `{user_id}` 为变量，用户ID.
+        如 user.id=1, API=`user/1/password`
+
+- Method: PUT    
+- Login: No
+- Params: 
+
+    |Field          |Required   |Default|Example
+    |---            |---        |---    |---
+    |mobile         |Yes        |       |13541013333
+    |verify_code    |Yes        |       |123456
+    |password       |Yes        |       |111111
+
+- Result:
+
+    ```json
+    {
+      "code": 200,
+      "message": "密码更新成功"
     }
     ```

@@ -8,9 +8,7 @@ use App\Components\ApiResult;
 use Illuminate\Contracts\Validation\Validator as AbstractValidator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 use Illuminate\Validation\ValidationException;
@@ -66,6 +64,7 @@ class ApiController extends Controller
             return true;
         } else {
             $this->errors = $validator->errors();
+            $this->throwValidationException(App::make('request'), $validator);
             return false;
         }
     }

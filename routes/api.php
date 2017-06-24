@@ -17,6 +17,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['namespace' => 'User'], function () {
         Route::get('user', 'ProfileController@profile')->name('user.profile');
         Route::put('user/logout', 'LogoutController@logout');
+        Route::put('user/{id}/password', 'PasswordController@reset');
     });
 
     Route::group(['namespace' => 'Friends'], function () {
@@ -35,5 +36,6 @@ Route::group(['middleware' => 'api'], function () {
 
     Route::group(['namespace' => 'Supports'], function () {
         Route::get('state/code', 'StateController@index');
+        Route::get('verify-code/sms', 'VerifyCodeController@sms');
     });
 });
