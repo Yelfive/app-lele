@@ -259,11 +259,7 @@ http://39.108.76.218/api/
 
 # 8. 修改/重置密码
 
-- API: user/{user_id}/password
-
-    > `{user_id}` 为变量，用户ID.
-        如 user.id=1, API=`user/1/password`
-
+- API: user/password
 - Method: PUT    
 - Login: No
 - Params: 
@@ -280,5 +276,28 @@ http://39.108.76.218/api/
     {
       "code": 200,
       "message": "密码更新成功"
+    }
+    ```
+
+# 8. 修改/重置密码
+
+- API: user/profile
+- Method: PUT    
+- Login: Yes
+- Params: 
+
+    |Field          |Required   |Default|Example
+    |---            |---        |---    |---
+    |...            |Yes        |       |字段与 见 [1. 用户注册](#1-用户注册) 相同
+
+- Result: 见 [1. 用户注册](#1-用户注册)
+
+    ```json
+    {
+      "code": 200,
+      "message": "更新成功",
+      "data": {
+        "...": "..."
+      }
     }
     ```

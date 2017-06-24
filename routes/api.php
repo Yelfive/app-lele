@@ -17,7 +17,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::group(['namespace' => 'User'], function () {
         Route::get('user', 'ProfileController@profile')->name('user.profile');
         Route::put('user/logout', 'LogoutController@logout');
-        Route::put('user/{id}/password', 'PasswordController@reset');
+        Route::put('user/password', 'PasswordController@reset');
+        Route::put('user/profile', 'ProfileController@edit');
     });
 
     Route::group(['namespace' => 'Friends'], function () {

@@ -23,7 +23,6 @@ class PasswordController extends ApiController
             'password' => 'required|string',
         ]);
 
-        // http://{AccountId}.mns.cn-shenzhen-internal.aliyuncs.com
         if ($this->checkVerifyCode()) {
             $user = Auth::user();
             if ($user->update(['password_hash' => Hash::make($request->input('password'))])) {
