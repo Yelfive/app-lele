@@ -2,6 +2,7 @@
     - im add
     - SEND REQUEST
     - accept/decline
+    - request list: fields
 - remove friends
 - search friend nearby
 - update coordinate of a user

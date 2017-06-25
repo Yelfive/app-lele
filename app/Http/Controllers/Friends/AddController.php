@@ -89,15 +89,15 @@ class AddController extends ApiController
          * @var User $iAmYours
          */
         $youAreMime = UserFriends::create([
-            'friend_id' => $friend->id,
+            'friend_id' => $friendRequest->friend_id,
             'friend_nickname' => $friend->nickname,
-            'created_by' => Auth::id(),
+            'created_by' => $friendRequest->sender,
         ]);
 
         $iAmYours = UserFriends::create([
-            'friend_id' => Auth::id(),
+            'friend_id' => $friendRequest->sender,
             'friend_nickname' => Auth::user()->nickname,
-            'created_by' => $friend->id,
+            'created_by' => $friendRequest->friend_id,
         ]);
 
         if ($youAreMime->hasErrors() || $iAmYours->hasErrors()) {
