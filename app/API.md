@@ -360,3 +360,35 @@ http://39.108.76.218/api/
       }
     }
     ```
+
+# 9. 获取其他用户资料
+
+- API: user/{user_id}/profile
+    
+    > `{user_id}` 为变量，用户ID. 如， user_id=1， API=user/1/profile
+    
+- Method: GET
+- Login: Yes
+- Params: None
+- Result: 见 [1. 用户注册](#1-用户注册)
+
+    ```json
+    {
+      "code": 200,
+      "message": "获取资料成功",
+      "data": {
+        "...": "...",
+        "is_friend": 1
+      }
+    }
+    ```
+    
+    **Fields**
+    
+    Field   |Description
+    ---     |---
+    is_friend|是否好友，0=否，1=是
+
+
+    
+
