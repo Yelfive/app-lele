@@ -145,21 +145,80 @@ http://39.108.76.218/api/
     ```
 
 ## 5. 添加好友
-- API: friend
+- API: friend/request
 - Method: POST
 - Login: Yes
 - Params:
 
     |Field          |Required   |Default|Example
     |---            |---        |---    |---
-    |friend_id      |Yes        |       |1
+    |friend_id      |Yes        |       |好友ID.两者必选其一, 
+    |mobile         |Yes        |       |手机号.两者必选其一
 
 - Result:
 
     ```json
     {
       "code": 200,
-      "message": "添加好友成功"
+      "message": "好友请求发送成功"
+    }
+    ```
+    
+### 5.1 申请列表
+
+- API: friend/request
+- Method: GET
+- Login: Yes
+- Params: None
+- Result:
+
+    ```json
+    {
+      "code": 200,
+      "message": "获取列表成功",
+      "list": [
+        {}
+      ]
+    }
+    ```
+    
+### 5.2 同意好友请求
+
+- API: friend/request
+- Method: PUT
+- Login: Yes
+- Params:
+
+    |Field          |Required   |Default|Example
+    |---            |---        |---    |---
+    |request_id     |Yes        |       |好友请求ID 
+
+- Result:
+
+    ```json
+    {
+      "code": 200,
+      "message": "成功添加好友"
+    }
+    ```
+
+### 5.3 拒绝好友请求
+
+- API: friend/request
+- Method: DELETE
+- Login: Yes
+- Params:
+
+    |Field          |Required   |Default|Example
+    |---            |---        |---    |---
+    |request_id     |Yes        |       |好友请求ID
+
+- Result:
+
+    ```json
+    {
+      "code": 200,
+      "message": "好友申请已拒绝"
     }
     ```
 
