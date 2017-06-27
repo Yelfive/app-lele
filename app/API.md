@@ -145,7 +145,7 @@ http://39.108.76.218/api/
     ```
 
 ## 5. 添加好友
-- API: friend/request
+- API: friends/request
 - Method: POST
 - Login: Yes
 - Params:
@@ -166,7 +166,7 @@ http://39.108.76.218/api/
     
 ### 5.1 申请列表
 
-- API: friend/request
+- API: friends/request
 - Method: GET
 - Login: Yes
 - Params: None
@@ -184,7 +184,7 @@ http://39.108.76.218/api/
     
 ### 5.2 同意好友请求
 
-- API: friend/request
+- API: friends/request
 - Method: PUT
 - Login: Yes
 - Params:
@@ -204,7 +204,7 @@ http://39.108.76.218/api/
 
 ### 5.3 拒绝好友请求
 
-- API: friend/request
+- API: friends/request
 - Method: DELETE
 - Login: Yes
 - Params:
@@ -223,7 +223,7 @@ http://39.108.76.218/api/
     ```
 
 ## 6. 获取好友列表
-- API: friend
+- API: friends
 - Method: GET
 - Login: Yes
 - Params:

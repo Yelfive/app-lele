@@ -25,10 +25,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     });
 
     Route::group(['namespace' => 'Friends'], function () {
-        Route::post('friend/request', 'RequestController@send');
-        Route::put('friend/request', 'RequestController@agree');
-        Route::delete('friend/request', 'RequestController@decline');
-        Route::get('friend/request', 'RequestController@index');
+        Route::post('friends/request', 'RequestController@send');
+        Route::put('friends/request', 'RequestController@agree');
+        Route::delete('friends/request', 'RequestController@decline');
+        Route::get('friends/request', 'RequestController@index');
         Route::get('friends/nearby', 'NearbyController@search');
 
         Route::get('friends', 'ListController@index');
