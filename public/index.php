@@ -27,6 +27,7 @@ require __DIR__ . '/../bootstrap/autoload.php';
 
 $writer = new FileWriter(__DIR__ . '/../storage/logs/request_capture.log');
 $capture = new Capture($writer, true);
+Capture::softAdd(['route' => $_SERVER['REQUEST_URI'] ?? '']);
 $capture->capture();
 
 /*

@@ -23,6 +23,9 @@ class SaveToMongo
     {
         $user = $event->user;
         $collection = MongoDB::collection('user');
+
+        $collection->createIndex(['location' => '2dsphere'], ['background' => true]);
+
         $filter = ['_id' => ['$eq' => $user->id]];
         $exists = $collection->count($filter);
         $document = $user->getAttributes();

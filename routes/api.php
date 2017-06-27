@@ -19,6 +19,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::put('user/logout', 'LogoutController@logout');
         Route::put('user/password', 'PasswordController@reset');
         Route::put('user/profile', 'ProfileController@edit');
+        Route::put('user/coordinate', 'CoordinateController@update');
 
         Route::get('user/{id}/profile', 'HomepageController@profile');
     });
@@ -28,6 +29,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::put('friend/request', 'RequestController@agree');
         Route::delete('friend/request', 'RequestController@decline');
         Route::get('friend/request', 'RequestController@index');
+        Route::get('friends/nearby', 'NearbyController@search');
 
         Route::get('friends', 'ListController@index');
     });
