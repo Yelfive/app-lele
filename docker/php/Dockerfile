@@ -26,6 +26,8 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install shmop soap sockets sysvmsg sysvsem sysvshm tidy wddx xmlrpc \
     && docker-php-ext-install -j$(nproc) xsl zip \
 
+RUN pecl install mongodb
+
 # Mac need to set www-data's uid 1000 and the group of staff
 # RUN usermod -u 1000 www-data && usermod -G staff www-data
     
