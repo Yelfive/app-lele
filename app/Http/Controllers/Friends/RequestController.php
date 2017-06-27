@@ -17,7 +17,7 @@ use fk\utility\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class AddController extends ApiController
+class RequestController extends ApiController
 {
     public function send(Request $request)
     {

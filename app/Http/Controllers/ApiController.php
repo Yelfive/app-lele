@@ -25,9 +25,15 @@ class ApiController extends Controller
      */
     protected $errors;
 
-    public function __construct(ApiResult $result)
-    {
+    /**
+     * @var Request
+     */
+    protected $request;
 
+    public function __construct(ApiResult $result, \fk\utility\Http\Request $request)
+    {
+        $request->setExpectsJson(true);
+        $this->request = $request;
         $this->result = $result;
     }
 

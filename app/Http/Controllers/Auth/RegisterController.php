@@ -14,6 +14,7 @@ use fk\utility\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -64,8 +65,8 @@ class RegisterController extends ApiController
                 ->message('短信验证码不正确');
         }
         list ($cityCode, $cityName) = $this->getCity();
-        /** @var User $user */
-        $user = new User(array_merge($data, [
+
+        $attributes = array_filter(array_merge($data, [
             'password_hash' => Hash::make($data['password']),
             'it_says' => $this->request->input('it_says'),
             'sex' => $this->request->input('sex'),
@@ -73,16 +74,24 @@ class RegisterController extends ApiController
             'avatar' => '',
             'city_name' => $cityName,
             'city_code' => $cityCode,
-        ]));
+        ]), function ($v) {
+            return $v !== null;
+        });
+
+        /** @var User $user */
+        $user = new User($attributes);
 
         $user->setAccount();
 
-        if ($user->validate() && $user->save()) {
+        DB::beginTransaction();
+        if ($user->validate() && $user->save() && !$user->hasErrors()) {
+            DB::commit();
             $user->update(['avatar' => $this->uploadAvatar($user->im_account)]);
             $this->result
                 ->message('注册成功')
                 ->data($user->getProfile());
         } else {
+            DB::rollBack();
             $this->result->code(HttpStatusCode::CLIENT_VALIDATION_ERROR)
                 ->message('注册失败')
                 ->extend(['errors' => $user->errors->toArray()]);
@@ -97,8 +106,12 @@ class RegisterController extends ApiController
     protected function uploadAvatar($as)
     {
         $uploadedFile = $this->request->file('avatar');
-        $filename = $uploadedFile->storeAs('images/avatar', $as . '.' . $uploadedFile->extension());
-        return basename($filename);
+        if ($uploadedFile) {
+            $filename = $uploadedFile->storeAs('images/avatar', $as . '.' . $uploadedFile->extension());
+            return basename($filename);
+        } else {
+            return '';
+        }
     }
 
     /**

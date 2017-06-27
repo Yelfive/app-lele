@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use App\Events\UserCreated;
-use App\Events\UserCreating;
-use fk\ease\mob\Hash;
+use App\Events\{
+    UserCreated, UserCreating, UserSaved
+};
 use Illuminate\Contracts\Auth\Authenticatable;
 
 /**
@@ -39,7 +39,8 @@ class User extends Model implements Authenticatable
 
     public $events = [
         'creating' => UserCreating::class,
-        'created' => UserCreated::class
+        'created' => UserCreated::class,
+        'saved' => UserSaved::class,
     ];
 
     /**
