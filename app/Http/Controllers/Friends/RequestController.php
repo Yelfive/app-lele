@@ -53,6 +53,8 @@ class RequestController extends ApiController
             'remark' => $request->input('remark', ''),
             'from' => $from,
         ]);
+
+        $this->result->message('好友请求发送成功');
     }
 
     public function agree(Request $request)
