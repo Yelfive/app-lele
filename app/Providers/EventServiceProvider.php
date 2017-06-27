@@ -9,7 +9,7 @@ use App\Events\{
     ModelSaving, UserCreated, UserCreating, UserUpdated, UserSaved
 };
 use App\Listeners\{
-    CreateIMAccount, FillModel, UpdateIdentity, GenerateLeLeNo, UpdateToMongo
+    CreateIMAccount, FillModel, UpdateIdentity, GenerateLeLeNo, SaveToMongo
 };
 
 class EventServiceProvider extends ServiceProvider
@@ -24,7 +24,7 @@ class EventServiceProvider extends ServiceProvider
             FillModel::class,
         ],
         UserSaved::class => [
-            UpdateToMongo::class
+            SaveToMongo::class
         ],
         UserUpdated::class => [
             UpdateIdentity::class

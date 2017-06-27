@@ -5,7 +5,7 @@ namespace App\Listeners;
 use App\Components\MongoDB;
 use App\Events\UserSaved;
 
-class UpdateToMongo
+class SaveToMongo
 {
     /**
      * Create the event listener.
