@@ -31,8 +31,8 @@ class RequestController extends ApiController
         } else {
             $condition = ['mobile' => $request->input('mobile')];
         }
-        /** @var int $friend */
-        $friend = User::where($condition)->where('deleted', User::DELETED_NO)->count();
+        /** @var UserFriends $friend */
+        $friend = User::where($condition)->where('deleted', User::DELETED_NO)->first(['id']);
 
         if (!$friend) {
             return $this->result->code(HttpStatusCode::CLIENT_NOT_FOUND)
@@ -49,7 +49,7 @@ class RequestController extends ApiController
 
         FriendRequest::create([
             'sender' => Auth::id(),
-            'friend_id' => $friendID,
+            'friend_id' => $friend->id,
             'remark' => $request->input('remark', ''),
             'from' => $from,
         ]);

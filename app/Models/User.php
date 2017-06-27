@@ -6,6 +6,7 @@ use App\Events\{
     UserCreated, UserCreating, UserSaved
 };
 use Illuminate\Contracts\Auth\Authenticatable;
+use Psr\Http\Message\UploadedFileInterface;
 
 /**
  * Fields in the table `user`
@@ -255,5 +256,10 @@ class User extends Model implements Authenticatable
     public function getAvatar()
     {
         return storage_path("app/images/avatar/{$this->avatar}");
+    }
+
+    public function saveAvatar(UploadedFileInterface $file)
+    {
+//        $file
     }
 }

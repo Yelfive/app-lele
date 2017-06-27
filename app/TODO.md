@@ -17,4 +17,5 @@
     - modify password
     
         > check verify code
-    
+- upload avatar
+- display avatar, uri
