@@ -7,8 +7,10 @@
 
 namespace App\Components;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Request;
 use MongoDB\Client;
+use MongoDB\Collection;
 use MongoDB\Driver\Cursor;
 use MongoDB\Model\BSONDocument;
 
@@ -34,18 +36,55 @@ class MongoDB
     {
         $list = [];
         foreach ($cursor as $item) {
-            $list[] = $item->getArrayCopy();
+            $data = $item->getArrayCopy();
+            unset(
+                $data['_id'], $data['deleted'], $data['latitude'], $data['longitude'],
+                $data['location'], $data['password_hash']
+            );
+            $data['distance'] = (int)$data['distance'];
+            $data['updated_at'] = strtotime($data['updated_at']);
+            $data['created_at'] = strtotime($data['created_at']);
+            $list[] = $data;
         }
         return $list;
     }
 
-    public static function paginate(string $collection, array $pipeline, $pageSize = 20, $pageParam = 'page')
+    public static function paginate(string $table, array $query, $pageSize = 20, $pageParam = 'page')
     {
-        $page = Request::get($pageParam, 1);
-        $cursor = static::collection($collection)->aggregate($pipeline, [
-//            '$limit' => $pageSize,
-//            '$offset' => $pageSize * ($page - 1)
-        ]);
-        return static::populate($cursor);
+        $page = (int)Request::get($pageParam, 1);
+        $collection = static::collection($table);
+
+        $pipeline = [];
+        foreach ($query as $k => $v) {
+            $pipeline[] = [$k => $v];
+        }
+
+        $totalCount = static::count($collection, $pipeline);
+
+        $pipeline[] = ['$skip' => $pageSize * ($page - 1)];
+        $pipeline[] = ['$limit' => $pageSize];
+        /** @var Cursor $cursor */
+        $cursor = $collection->aggregate($pipeline);
+        $list = static::populate($cursor);
+        $pagination = [
+            'total' => $totalCount,
+            'per_page' => $pageSize,
+            'current_page' => $page,
+            'last_page' => (int)ceil($totalCount / $pageSize),
+            'from' => $pageSize * ($page - 1),
+        ];
+        $pagination['to'] = $page === $pagination['last_page'] ? $totalCount - $pagination['from'] : $pageSize * $page;
+
+        return [
+            'list' => $list,
+            'pagination' => $pagination
+        ];
+    }
+
+    protected static function count(Collection $collection, $pipeline): int
+    {
+        $pipeline[]['$count'] = 'total_count';
+
+        return $collection->aggregate($pipeline)->toArray()[0]['total_count'] ?? 0;
     }
 }

@@ -27,7 +27,8 @@ class CoordinateController extends ApiController
                 'location' => [
                     'type' => 'Point',
                     'coordinates' => [(float)$request->input('longitude'), (float)$request->input('latitude')]
-                ]
+                ],
+                'location_uploaded_at' => $_SERVER['REQUEST_TIME'],
             ]
         ]);
         $collection->createIndex(['location' => '2dsphere'], ['background' => true]);

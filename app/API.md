@@ -34,7 +34,6 @@ http://39.108.76.218/api/
 
 - `total` 总条数
 - `per_page` 每页展示条数
-- `page` 当前页
 - `current_page` 当前页码
 - `last_page` 最后一页页码
 - `from` 当前页第一条编号, e.g. from=1 第一条
@@ -402,5 +401,62 @@ http://39.108.76.218/api/
     is_friend|是否好友，0=否，1=是
 
 
-    
+# 10. 查询附近的人
 
+- API: friends/nearby
+- Method: GET
+- Login: Yes
+- Params: 
+
+    |Field          |Required   |Default|Example
+    |---            |---        |---    |---
+    |longitude      |Yes        |       |经度
+    |latitude       |Yes        |       |纬度
+    |sex            |No         |       |female=女，male＝男
+    |location_uploaded_at| No   |       |10位时间戳，检索大于该时间的记录
+    |page           |No         |1      |
+    |page_size      |No         |20     |
+
+- Result:
+
+    ```json
+    {
+        "code": 200,
+        "message": "查询成功",
+        "list": [
+            {
+                "mobile": "13541013373",
+                "nickname": "Felix",
+                "state_code": "+86",
+                "sex": "female",
+                "avatar": "",
+                "city_name": "成都",
+                "city_code": "5001",
+                "account": "10000321",
+                "it_says": "Hello world to you",
+                "updated_at": 1498516570,
+                "created_at": 1498516570,
+                "id": 10,
+                "im_account": "88950b12016202c8798ffe8d0bb46eea10",
+                "im_password": "8f084ab9a91220498dd1da3cdc22c2c7",
+                "age": 0,
+                "address": "0",
+                "distance": 11131
+            }
+        ],
+        "pagination": {
+            "total": 1,
+            "per_page": 20,
+            "current_page": 1,
+            "last_page": 1,
+            "from": 0,
+            "to": 1
+        }
+    }
+    ```
+
+    **Fields**
+    
+    Field   |Description
+    ---     |---
+    distance|距离，单位:米
