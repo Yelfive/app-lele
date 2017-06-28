@@ -34,10 +34,16 @@ http://39.108.76.218/api/
 
 - `total` 总条数
 - `per_page` 每页展示条数
+- `page` 当前页
 - `current_page` 当前页码
 - `last_page` 最后一页页码
 - `from` 当前页第一条编号, e.g. from=1 第一条
 - `to` 当前页最后一条编号, e.g. from=20 第二十条
+
+> 列表接口请求均包含可选参数
+
+- `per_page` 每页展示条数
+- `page` 当前页
 
 接口
 ==========
@@ -169,7 +175,13 @@ http://39.108.76.218/api/
 - API: friends/request
 - Method: GET
 - Login: Yes
-- Params: None
+- Params: 
+
+    |Field          |Required   |Default|Example
+    |---            |---        |---    |---
+    |per_page       |No         |       |每页显示条数 
+    |page           |No         |       |当前页码
+
 - Result:
 
     ```json
