@@ -61,8 +61,8 @@ class MongoDB
 
         $totalCount = static::count($collection, $pipeline);
 
-        $pipeline[] = ['$skip' => $pageSize * ($page - 1)];
-        $pipeline[] = ['$limit' => $pageSize];
+        $pipeline[] = ['$skip' => intval($pageSize * ($page - 1))];
+        $pipeline[] = ['$limit' => (int)$pageSize];
         /** @var Cursor $cursor */
         $cursor = $collection->aggregate($pipeline);
         $list = static::populate($cursor);
