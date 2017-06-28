@@ -2,6 +2,9 @@
 
 namespace App\Console;
 
+use App\Console\Controllers\{
+    TestController, UserToMongoController
+};
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +16,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Console\Controllers\TestController::class,
+        TestController::class,
+        UserToMongoController::class
     ];
 
     /**
