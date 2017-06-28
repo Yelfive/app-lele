@@ -50,7 +50,7 @@ class NearbyController extends ApiController
 
         $pipeline['$geoNear'] = $geoNear;
 
-        $list = MongoDB::paginate('user', $pipeline, $request->get('page_size', 20));
+        $list = MongoDB::paginate('user', $pipeline, $request->get('per_page', 20));
 
         $this->result
             ->message('查询成功')

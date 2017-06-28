@@ -415,7 +415,7 @@ http://39.108.76.218/api/
     |sex            |No         |       |female=女，male＝男
     |location_uploaded_at| No   |       |10位时间戳，检索大于该时间的记录
     |page           |No         |1      |
-    |page_size      |No         |20     |
+    |per_page       |No         |20     |
 
 - Result:
 
