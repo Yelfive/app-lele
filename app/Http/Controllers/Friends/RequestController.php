@@ -8,6 +8,7 @@
 namespace App\Http\Controllers\Friends;
 
 use App\Components\HttpStatusCode;
+use App\Components\MongoDB;
 use App\Http\Controllers\ApiController;
 use App\Models\FriendRequest;
 use App\Models\User;
@@ -19,6 +20,7 @@ use fk\utility\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use MongoDB\Model\BSONDocument;
 
 class RequestController extends ApiController
 {
@@ -34,12 +36,19 @@ class RequestController extends ApiController
         } else {
             $condition = ['mobile' => $request->input('mobile')];
         }
-        /** @var UserFriends $friend */
+        /** @var User $friend */
         $friend = User::where($condition)->where('deleted', User::DELETED_NO)->first(['id']);
 
         if (!$friend) {
             return $this->result->code(HttpStatusCode::CLIENT_NOT_FOUND)
                 ->message('用户不存在,不能添加好友');
+        }
+
+        $requestSentAlready = FriendRequest::where(['friend_id' => $friendID, 'sender' => Auth::id(), 'status' => FriendRequest::STATUS_UNHANDLED])->count();
+        if ($requestSentAlready) {
+            return $this->result
+                ->code(HttpStatusCode::SUCCESS_ACCEPTED)
+                ->message('已发送好友申请，不能重复发送');
         }
 
         $alreadyFriends = UserFriends::where(['friend_id' => $friendID, 'created_by' => Auth::id()])->count();
@@ -55,9 +64,38 @@ class RequestController extends ApiController
             'friend_id' => $friend->id,
             'remark' => $request->input('remark', ''),
             'from' => $from,
+            'distance' => $this->distanceToMe($friend),
         ]);
 
-        $this->result->message('好友请求发送成功');
+        return $this->result->message('好友请求发送成功');
+    }
+
+    protected function distanceToMe(User $user): int
+    {
+        /**
+         * @var BSONDocument $document
+         * @var BSONDocument $myDocument
+         */
+        $document = MongoDB::collection('user')->findOne(['_id' => $user->id]);
+        $myDocument = MongoDB::collection('user')->findOne(['_id' => Auth::id()]);
+
+        $longitude = $document['location']['coordinates'][0] ?? 0;
+        $latitude = $document['location']['coordinates'][1] ?? 0;
+
+        $myLongitude = $myDocument['location']['coordinates'][0] ?? 0;
+        $myLatitude = $myDocument['location']['coordinates'][1] ?? 0;
+
+        if (!$latitude || !$longitude || !$myLatitude || !$myLongitude) {
+            return User::DISTANCE_UNKNOWN;
+        }
+
+        return (int)round(6378.138 * 1000 * 2 * asin(
+                sqrt(
+                    pow(sin(($myLatitude - $latitude) * pi() / 360), 2)
+                    + cos($myLatitude * pi() / 180) * cos($latitude * pi() / 180)
+                    * pow(sin(($myLongitude - $longitude) * pi() / 360), 2)
+                )
+            ));
     }
 
     public function agree(Request $request, IM $IM)
@@ -69,7 +107,7 @@ class RequestController extends ApiController
 
         /** @var FriendRequest $friendRequest */
         $friendRequest = FriendRequest::where([
-            'request_id' => $request->input('request_id'),
+            'id' => $request->input('request_id'),
             'friend_id' => Auth::id()
         ])->first();
 
@@ -120,7 +158,7 @@ class RequestController extends ApiController
         ]);
 
         $friendRequest = FriendRequest::where([
-            'request_id' => $request->input('id'),
+            'id' => $request->input('id'),
             'friend_id' => Auth::id(),
         ]);
 
@@ -130,7 +168,16 @@ class RequestController extends ApiController
                 ->message('没有找到对应好友请求');
         }
 
+        /** @var FriendRequest $friendRequest */
         $friendRequest->update(['status' => FriendRequest::STATUS_DECLINED]);
+        if ($errors = $friendRequest->errors) {
+            $this->result
+                ->code(HttpStatusCode::CLIENT_VALIDATION_ERROR)
+                ->message('操作失败')
+                ->extend(['errors' => $errors->toArray()]);
+        } else {
+            $this->result->message('操作成功');
+        }
     }
 
     protected function agreeSuccessResponse()
@@ -153,8 +200,11 @@ class RequestController extends ApiController
         $builder = FriendRequest::from('friend_request as r')
             ->select(['u.*', 'u.id as uid', 'r.*'])
             ->select([
-                'u' => ['id as uid', 'nickname', 'mobile', 'state_code', 'avatar', 'account', 'sex', 'city_name', 'city_code', 'age', 'it_says'],
-                'r' => ['id as request_id', 'sender', 'friend_id', 'created_at', 'updated_at', 'status', 'from', 'remark'],
+                'u' => [
+                    'id as uid', 'nickname', 'state_code', 'mobile', 'avatar', 'account',
+                    'im_account', 'sex', 'city_name', 'city_code', 'age', 'it_says', 'address',
+                ],
+                'r' => ['id as request_id', 'sender', 'friend_id', 'distance', 'created_at', 'updated_at', 'status', 'from', 'remark'],
             ])
             ->leftJoin('user as u', function (JoinClause $join) {
                 return $join->on('u.id', 'r.sender')->orOn('u.id', 'r.friend_id');

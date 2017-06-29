@@ -30,9 +30,9 @@ class ApiController extends Controller
      */
     protected $request;
 
-    public function __construct(ApiResult $result, \fk\utility\Http\Request $request)
+    public function __construct(ApiResult $result, Request $request)
     {
-        $request->setExpectsJson(true);
+        if ($request instanceof \fk\utility\Http\Request) $request->setExpectsJson(true);
         $this->request = $request;
         $this->result = $result;
     }

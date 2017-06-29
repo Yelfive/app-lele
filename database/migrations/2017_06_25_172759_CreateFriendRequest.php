@@ -19,6 +19,7 @@ class CreateFriendRequest extends Migration
             $table->unsignedInteger('friend_id')->comment('ID of user the sender want to add');
             $table->string('remark', 1000)->default('')->comment('');
             $table->unsignedInteger('from')->comment('The request come from, e.g. mobile, user search');
+            $table->integer('distance')->comment('Distance between sender and friend_id, when sending request');
             $table->tinyInteger('status')->default(0)->comment('Status of the request, agree or decline');
             $table->timestamps();
         });

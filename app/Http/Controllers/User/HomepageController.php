@@ -18,15 +18,15 @@ class HomepageController extends ApiController
 {
     public function profile($id, Request $request)
     {
-        $this->validate($request, [
-            'id' => 'required|int|mix:0'
+        $this->validateData(['id' => $id], [
+            'id' => 'required|int|min:0'
         ]);
 
         /** @var User $user */
         $user = User::where([
             'deleted' => User::DELETED_NO,
-            'id' => $request->get('id'),
-        ]);
+            'id' => $id,
+        ])->first();
 
         if (!$user) {
             return $this->result
@@ -34,7 +34,7 @@ class HomepageController extends ApiController
                 ->message('用户不存在');
         }
 
-        $isFriend = UserFriends::where(['friend_id' => $request->get('id'), 'created_by' => Auth::id()])->count();
+        $isFriend = UserFriends::where(['friend_id' => $id, 'created_by' => Auth::id()])->count();
         $data = $user->getProfile();
         $data['is_friend'] = $isFriend ? 1 : 0;
 

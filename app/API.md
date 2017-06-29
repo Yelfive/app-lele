@@ -400,7 +400,7 @@ http://39.108.76.218/api/
 # 8. 修改/重置密码
 
 - API: user/profile
-- Method: PUT    
+- Method: PUT
 - Login: Yes
 - Params: 
 

@@ -38,6 +38,8 @@ class User extends Model implements Authenticatable
     const DELETED_NO = 0;
     const DELETED_YES = 1;
 
+    const DISTANCE_UNKNOWN = 999999999;
+
     public $events = [
         'creating' => UserCreating::class,
         'created' => UserCreated::class,
@@ -239,7 +241,7 @@ class User extends Model implements Authenticatable
     public function generateIMAccount()
     {
         $this->im_account = $this->hashIMAccount();
-        $this->im_password = $this->hashPassword();
+        $this->im_password = $this->hashIMPassword();
     }
 
     public function hashIMAccount($id = null)
@@ -248,7 +250,7 @@ class User extends Model implements Authenticatable
         return md5(sha1($id)) . $id;
     }
 
-    public function hashPassword($createdAt = null)
+    public function hashIMPassword($createdAt = null)
     {
         return md5($createdAt ?: $this->created_at);
     }
