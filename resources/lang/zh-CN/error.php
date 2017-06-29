@@ -6,5 +6,6 @@
  */
 
 return [
-    'Unauthorized' => '您没有访问权限'
+    'Unauthorized' => '您没有访问权限',
+    'Validation failed' => '数据验证失败',
 ];
