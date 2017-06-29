@@ -205,7 +205,9 @@ http://39.108.76.218/api/
             "friend_id": 3,
             "created_at": 1498572631,
             "updated_at": 1498572631,
-            "status": 0
+            "status": 0,
+            "from": 1,
+            "remark": ""
         }
       ],
       "pagination": {}
@@ -229,6 +231,13 @@ http://39.108.76.218/api/
     0       |未处理
     1       |已同意
     -1      |已拒绝
+    
+    **from**
+    
+    From    |Description
+    ---     |---
+    1       |手机号查找
+    2       |附近的人
     
     > NOTICE: 根据sender是否自己，来判断是否自己发出的请求
     
