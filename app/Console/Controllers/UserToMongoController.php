@@ -16,6 +16,8 @@ class UserToMongoController extends Command
 
     public $name = 'user2mongo';
 
+    public $description = 'migrate users in mysql into mongo, update if exits, insert if not';
+
     public function handle()
     {
         $collection = MongoDB::collection('user');

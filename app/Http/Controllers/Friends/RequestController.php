@@ -12,8 +12,10 @@ use App\Http\Controllers\ApiController;
 use App\Models\FriendRequest;
 use App\Models\User;
 use App\Models\UserFriends;
+use fk\utility\Database\Eloquent\Builder;
 use fk\utility\Http\Request;
 use fk\utility\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -146,10 +148,23 @@ class RequestController extends ApiController
     public function index()
     {
         /** @var LengthAwarePaginator $paginator */
-        $paginator = FriendRequest::where([
-            'friend_id' => Auth::id(),
-            'status' => FriendRequest::STATUS_UNHANDLED,
-        ])->paginate();
+        $builder = FriendRequest::from('friend_request as r')
+            ->select(['u.*', 'u.id as uid', 'r.*'])
+            ->select([
+                'u' => ['id as uid', 'nickname', 'mobile', 'state_code', 'avatar', 'account', 'sex', 'city_name', 'city_code', 'age', 'it_says'],
+                'r' => ['id as request_id', 'created_at', 'updated_at'],
+            ])
+            ->leftJoin('user as u', function (JoinClause $join) {
+                return $join->on('u.id', 'r.sender')->orOn('u.id', 'r.friend_id');
+            })
+            ->where(function (Builder $builder) {
+                $builder->where('sender', Auth::id())
+                    ->orWhere('friend_id', Auth::id());
+            })
+            ->where('u.id', '!=', Auth::id())
+            ->orderBy('r.id', 'desc');
+
+        $paginator = $builder->paginate();
         FriendRequest::$serializeDateAsInteger = true;
 
         $this->result->message('获取列表成功')
