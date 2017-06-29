@@ -12,6 +12,7 @@ use App\Http\Controllers\ApiController;
 use App\Models\FriendRequest;
 use App\Models\User;
 use App\Models\UserFriends;
+use fk\ease\mob\IM;
 use fk\utility\Database\Eloquent\Builder;
 use fk\utility\Http\Request;
 use fk\utility\Pagination\LengthAwarePaginator;
@@ -59,7 +60,7 @@ class RequestController extends ApiController
         $this->result->message('好友请求发送成功');
     }
 
-    public function agree(Request $request)
+    public function agree(Request $request, IM $IM)
     {
 
         $this->validateData($request->input(), [
@@ -107,6 +108,7 @@ class RequestController extends ApiController
         if ($youAreMime->hasErrors() || $iAmYours->hasErrors()) {
             $this->agreeFailedResponse();
         } else {
+            $IM->addFriend(Auth::user()->im_account, $friend->im_account);
             $this->agreeSuccessResponse();
         }
     }

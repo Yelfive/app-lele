@@ -1,8 +1,3 @@
-- add friends 
-    - im add
-    - SEND REQUEST
-    - accept/decline
-    - request list: fields
 - remove friends
 - search friend nearby
 - update coordinate of a user
@@ -17,5 +12,9 @@
     - modify password
     
         > check verify code
+        
 - upload avatar
 - display avatar, uri
+
+
+- backend
