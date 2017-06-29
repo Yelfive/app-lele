@@ -22,9 +22,9 @@ class FriendRequest extends Model
     const FROM_MOBILE_SPECIFY = 1;
     const FROM_SEARCH_NEARBY = 2;
 
+    const STATUS_DECLINED = -1;
     const STATUS_UNHANDLED = 0;
-    const STATUS_AGREE = 1;
-    const STATUS_DECLINE = 2;
+    const STATUS_AGREED = 1;
 
     /**
      * @var string Name of the table, without prefix

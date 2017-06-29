@@ -83,7 +83,7 @@ class RequestController extends ApiController
 
         DB::beginTransaction();
 
-        $friendRequest->update(['status' => FriendRequest::STATUS_AGREE]);
+        $friendRequest->update(['status' => FriendRequest::STATUS_AGREED]);
         if ($friendRequest->hasErrors()) {
             $this->agreeFailedResponse();
         }
@@ -128,7 +128,7 @@ class RequestController extends ApiController
                 ->message('没有找到对应好友请求');
         }
 
-        $friendRequest->update(['status' => FriendRequest::STATUS_DECLINE]);
+        $friendRequest->update(['status' => FriendRequest::STATUS_DECLINED]);
     }
 
     protected function agreeSuccessResponse()
@@ -152,7 +152,7 @@ class RequestController extends ApiController
             ->select(['u.*', 'u.id as uid', 'r.*'])
             ->select([
                 'u' => ['id as uid', 'nickname', 'mobile', 'state_code', 'avatar', 'account', 'sex', 'city_name', 'city_code', 'age', 'it_says'],
-                'r' => ['id as request_id', 'created_at', 'updated_at'],
+                'r' => ['id as request_id', 'sender', 'friend_id', 'created_at', 'updated_at', 'status'],
             ])
             ->leftJoin('user as u', function (JoinClause $join) {
                 return $join->on('u.id', 'r.sender')->orOn('u.id', 'r.friend_id');

@@ -188,10 +188,49 @@ http://39.108.76.218/api/
       "code": 200,
       "message": "获取列表成功",
       "list": [
-        {}
-      ]
+        {
+            "uid": 3,
+            "nickname": "Felix",
+            "mobile": "13541010003",
+            "state_code": "+86",
+            "avatar": "",
+            "account": "10000213",
+            "sex": "unknown",
+            "city_name": "5001",
+            "city_code": "成都",
+            "age": 0,
+            "it_says": "",
+            "request_id": 3,
+            "sender": 10,
+            "friend_id": 3,
+            "created_at": 1498572631,
+            "updated_at": 1498572631,
+            "status": 0
+        }
+      ],
+      "pagination": {}
     }
     ```
+    **list**
+    
+    Field       |Description
+    ---         |---
+    uid         |用户ID
+    request_id  |好友请求id
+    sender      |申请人ID
+    friend_id   |被申请人ID
+    created_at  |申请时间
+    updated_at  |申请更新时间, e.g. 同意，拒绝时间
+    
+    **status**
+    
+    Status  |Description
+    ---     |---
+    0       |未处理
+    1       |已同意
+    -1      |已拒绝
+    
+    > NOTICE: 根据sender是否自己，来判断是否自己发出的请求
     
 ### 5.2 同意好友请求
 
