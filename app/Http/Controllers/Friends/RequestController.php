@@ -152,7 +152,7 @@ class RequestController extends ApiController
             ->select(['u.*', 'u.id as uid', 'r.*'])
             ->select([
                 'u' => ['id as uid', 'nickname', 'mobile', 'state_code', 'avatar', 'account', 'sex', 'city_name', 'city_code', 'age', 'it_says'],
-                'r' => ['id as request_id', 'sender', 'friend_id', 'created_at', 'updated_at', 'status'],
+                'r' => ['id as request_id', 'sender', 'friend_id', 'created_at', 'updated_at', 'status', 'from', 'remark'],
             ])
             ->leftJoin('user as u', function (JoinClause $join) {
                 return $join->on('u.id', 'r.sender')->orOn('u.id', 'r.friend_id');
