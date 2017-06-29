@@ -87,7 +87,7 @@ class Handler extends ExceptionHandler
             return response()->json(
                 ApiResult::instance()
                     ->code(HttpStatusCode::CLIENT_VALIDATION_ERROR)
-                    ->extend($errors)
+                    ->extend(['errors' => $errors])
                     ->message(__('error.Validation failed'))
                 , HttpStatusCode::getStatusCode(HttpStatusCode::CLIENT_VALIDATION_ERROR)
             );
