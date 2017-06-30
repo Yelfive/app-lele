@@ -61,9 +61,10 @@ $app = require_once __DIR__ . '/../bootstrap/app.php';
  */
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
 
-$response = $kernel->handle(
-    $request = \fk\utility\Http\Request::capture()
-);
+$request = \fk\utility\Http\Request::capture();
+Capture::add(['form-data' => $request->input()]);
+
+$response = $kernel->handle($request);
 
 if ($request->expectsJson()) {
     $response->header('Content-Type', 'application/json;charset=utf8');
