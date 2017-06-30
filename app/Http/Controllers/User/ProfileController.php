@@ -24,7 +24,6 @@ class ProfileController extends ApiController
 
     public function edit(Request $request)
     {
-        // todo: upload avatar
         $this->validate($request, [
             'avatar' => 'file',
         ]);
@@ -34,7 +33,7 @@ class ProfileController extends ApiController
         if ($password = $request->input('password')) {
             $user->password_hash = Hash::make($password);
         } else if ($avatar = $request->file('avatar')) {
-            $user->avatar = '';
+            $user->saveAvatar($avatar);
         }
 
         if ($user->update()) {

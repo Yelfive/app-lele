@@ -193,7 +193,7 @@ class ApiResult implements Jsonable
         return static::instance()
             ->code(HttpStatusCode::CLIENT_VALIDATION_ERROR)
             ->message($message ?? __('base.Invalid params.'))
-            ->extend(['extra' => $errors]);
+            ->extend(['errors' => $errors]);
     }
 
     /**

@@ -6,7 +6,7 @@ use App\Events\{
     UserCreated, UserCreating, UserSaved
 };
 use Illuminate\Contracts\Auth\Authenticatable;
-use Psr\Http\Message\UploadedFileInterface;
+use Illuminate\Http\UploadedFile;
 
 /**
  * Fields in the table `user`
@@ -260,8 +260,13 @@ class User extends Model implements Authenticatable
         return storage_path("app/images/avatar/{$this->avatar}");
     }
 
-    public function saveAvatar(UploadedFileInterface $file)
+    public function saveAvatar(UploadedFile $file)
     {
-//        $file
+        if (!$this->id) throw new \Exception('Cannot upload avatar, user does not exits yet.');
+
+        $as = $this->im_account ?: $this->hashIMAccount();
+        $filename = $file->storeAs('images/avatar', $as . '.' . $file->extension());
+
+        return $this->avatar = basename($filename);
     }
 }
