@@ -22,6 +22,7 @@ class ListController extends ApiController
         $paginator = Model::where('created_by', Auth::id())
             ->from('user_friends as uf')
             ->leftJoin('user as u', 'u.id', '=', 'uf.created_by')
+            ->where('uf.created_by', Auth::id())
             ->orderBy('uf.id', 'DESC')
             ->paginate($request->get('per_page', 1000), $this->listFields());
 
