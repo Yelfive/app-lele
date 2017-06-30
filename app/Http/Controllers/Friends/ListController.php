@@ -34,7 +34,7 @@ class ListController extends ApiController
         $paginator = Model::from('user_friends as uf')
             ->select($this->listFields())
             ->where('created_by', Auth::id())
-            ->leftJoin('user as u', 'u.id', '=', 'uf.created_by')
+            ->leftJoin('user as u', 'u.id', '=', 'uf.friend_id')
             ->where('uf.created_by', Auth::id())
             ->orderBy('uf.id', 'DESC')
             ->paginate($request->get('per_page', 1000));
