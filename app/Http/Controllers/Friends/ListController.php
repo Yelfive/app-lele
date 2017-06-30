@@ -19,8 +19,15 @@ class ListController extends ApiController
     public function index(Request $request)
     {
         /** @var LengthAwarePaginator $paginator */
-        $paginator = Model::where('created_by', Auth::id())
-            ->from('user_friends as uf')
+        $paginator = Model::from('user_friends as uf')
+            ->select([
+                'u' => [
+                    'id', 'nickname', 'state_code', 'mobile', 'avatar', 'account', 'im_account', 'sex',
+                    'city_name', 'city_code', 'age', 'it_says', 'address', 'created_at', 'updated_at'
+                ],
+                'uf' => ['friend_nickname']
+            ])
+            ->where('created_by', Auth::id())
             ->leftJoin('user as u', 'u.id', '=', 'uf.created_by')
             ->where('uf.created_by', Auth::id())
             ->orderBy('uf.id', 'DESC')

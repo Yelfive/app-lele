@@ -299,23 +299,31 @@ http://39.108.76.218/api/
       "message": "获取好友列表成功",
       "list": [
         {
-          "id": 3,
-          "friend_id": 1,
-          "friend_nickname": "Felix"
-        },
-        {
-          "id": 2,
-          "friend_id": 1,
-          "friend_nickname": "Felix"
+            "id": 10,
+            "nickname": "Felix",
+            "state_code": "+86",
+            "mobile": "13541013373",
+            "avatar": "88950b12016202c8798ffe8d0bb46eea10.png",
+            "account": "10000321",
+            "im_account": "88950b12016202c8798ffe8d0bb46eea10",
+            "sex": "female",
+            "city_name": "成都",
+            "city_code": "5001",
+            "age": 0,
+            "it_says": "Hello world to you",
+            "address": "0",
+            "created_at": "2017-06-27 06:36:10",
+            "updated_at": "2017-06-27 06:36:10",
+            "friend_nickname": "你好"
         }
       ],
       "pagination": {
-        "total": 2,
+        "total": 1,
         "per_page": 1000,
         "current_page": 1,
         "last_page": 1,
         "from": 1,
-        "to": 2
+        "to": 1
       }
     }
     ```
