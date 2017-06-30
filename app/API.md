@@ -508,3 +508,24 @@ http://39.108.76.218/api/
     Field   |Description
     ---     |---
     distance|距离，单位:米
+
+# 11. 上传用户地理位置
+
+- API: user/coordinate
+- Method: PUT
+- Login: Yes
+- Params: 
+
+    |Field          |Required   |Default|Example
+    |---            |---        |---    |---
+    |longitude      |Yes        |       |经度
+    |latitude       |Yes        |       |纬度
+
+- Result:
+
+    ```json
+    {
+        "code": 200,
+        "message": "更新成功"
+    }
+    ```
