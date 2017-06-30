@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('friends/nearby', 'NearbyController@search');
 
         Route::get('friends', 'ListController@index');
+        Route::delete('friend/{id}', 'ListController@delete');
     });
 
 });

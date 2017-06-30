@@ -7,11 +7,14 @@
 
 namespace App\Http\Controllers\Friends;
 
+use App\Components\HttpStatusCode;
 use App\Http\Controllers\ApiController;
 use App\Models\Model;
+use App\Models\UserFriends;
 use fk\utility\Http\Request;
 use fk\utility\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ListController extends ApiController
 {
@@ -42,6 +45,18 @@ class ListController extends ApiController
         $this->result
             ->message('获取好友列表成功')
             ->extend($paginator->toFKStyle());
+    }
+
+    public function delete($id)
+    {
+        $deleted = UserFriends::where(['friend_id' => $id, 'created_by' => Auth::id()])->delete();
+        if ($deleted) {
+            $this->result->message('删除成功');
+        } else {
+            $this->result
+                ->code(HttpStatusCode::CLIENT_NOT_FOUND)
+                ->message('删除失败，TA不是您的好友');
+        }
     }
 
 }

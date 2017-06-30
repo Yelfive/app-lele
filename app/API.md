@@ -281,6 +281,29 @@ http://39.108.76.218/api/
     }
     ```
 
+### 5.4 删除好友
+
+- API: friend/{id}
+
+    > NOTICE: 这个地方是`friend`.
+    
+- Method: DELETE
+- Login: Yes
+- Params:
+
+    |Field          |Required   |Default|Example
+    |---            |---        |---    |---
+    |id             |Yes        |       |好友UserID
+
+- Result:
+
+    ```json
+    {
+      "code": 200,
+      "message": "删除成功"
+    }
+    ```
+
 ## 6. 获取好友列表
 - API: friends
 - Method: GET
