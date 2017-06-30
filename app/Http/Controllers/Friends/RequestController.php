@@ -118,7 +118,12 @@ class RequestController extends ApiController
         }
 
         /** @var User $friend */
-        $friend = User::where('id', $friendRequest->friend_id);
+        $friend = User::where('id', $friendRequest->friend_id)->first();
+        if (!$friend) {
+            return $this->result
+                ->code(HttpStatusCode::CLIENT_NOT_FOUND)
+                ->message('该用户不存在');
+        }
 
         DB::beginTransaction();
 
