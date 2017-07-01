@@ -9,8 +9,10 @@ namespace app\Http\Controllers\User;
 
 use App\Components\HttpStatusCode;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Supports\VerifyCodeController;
 use fk\utility\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 
 class PasswordController extends ApiController
@@ -40,8 +42,12 @@ class PasswordController extends ApiController
 
     }
 
-    protected function checkVerifyCode()
+    protected function checkVerifyCode(): bool
     {
-        return true;
+        return VerifyCodeController::check(
+            VerifyCodeController::FOR_RESET_PASSWORD,
+            $this->request->get('mobile'),
+            $this->request->get('verify_code')
+        );
     }
 }

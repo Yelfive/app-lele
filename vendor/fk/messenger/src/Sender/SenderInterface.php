@@ -11,5 +11,5 @@ namespace fk\messenger\Sender;
 
 interface SenderInterface
 {
-    public function send($mobile, $content);
+    public function send($mobile, $data);
 }

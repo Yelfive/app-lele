@@ -7,15 +7,84 @@
 
 namespace App\Http\Controllers\Supports;
 
+use App\Components\HttpStatusCode;
 use App\Http\Controllers\ApiController;
 use fk\messenger\Messenger;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Validation\Rule;
 
 class VerifyCodeController extends ApiController
 {
+
+    const FOR_REGISTER = 1;
+    const FOR_RESET_PASSWORD = 2;
+
+    const TEMPLATE_REGISTER = 'SMS_70850032';
+    CONST TEMPLATE_RESET_PASSWORD = 'SMS_75935032';
+
+    protected $forge = true;
+
     public function sms(Messenger $messenger)
     {
+        $this->validateData($this->request->query->all(), [
+            'mobile' => 'required|string|size:11',
+            'for' => ['required', Rule::in($this->fors())]
+        ]);
+        $for = $this->request->get('for');
+        $mobile = $this->request->get('mobile');
+        if ($this->forge) {
+            $this->result->extend([
+                'verify_code' => $code = $this->generateCode()
+            ]);
+            $success = true;
+        } else {
+            $content = $this->getContent($for);
+            $success = $messenger->with(config('sms.AliCloud'))->send($mobile, $content);
+            $code = $content['params']['code'];
+        }
 
-        $messenger->send();
-        $this->result->message('验证码获取成功');
+        if ($success) {
+            Cache::add("code_{$for}_{$mobile}", $code, 600);
+            $this->result->message('验证码获取成功');
+        } else {
+            $this->result
+                ->code(HttpStatusCode::SERVER_THIRD_PARTY_ERROR)
+                ->message('验证码获取失败');
+        }
+    }
+
+    protected function getContent($for)
+    {
+        if ($this->forge) return $this->generateCode();
+
+        switch ($for) {
+            case static::FOR_RESET_PASSWORD:
+                return [
+                    'signature' => config('signature'),
+                    'template' => static::TEMPLATE_RESET_PASSWORD,
+                    'params' => [
+                        'code' => $code = $this->generateCode(),
+                        'app' => config('signature')
+                    ],
+                    'message' => "验证码{$code}，您正在修改乐乐密码，感谢您的支持！",
+                ];
+        }
+    }
+
+    protected function generateCode()
+    {
+        return (string)mt_rand(100000, 999999);
+    }
+
+    protected function fors()
+    {
+        return [
+            static::FOR_REGISTER, static::FOR_RESET_PASSWORD,
+        ];
+    }
+
+    public static function check($for, $mobile, $code): bool
+    {
+        return $code && Cache::get("verify_code_{$for}_{$mobile}") == $code;
     }
 }

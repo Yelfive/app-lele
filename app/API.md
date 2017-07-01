@@ -396,6 +396,7 @@ http://39.108.76.218/api/
     |Field          |Required   |Default|Example
     |---            |---        |---    |---
     |mobile         |Yes        |       |13541013333
+    |for            |Yes        |       |1=注册，2=修改/重置密码
 
 - Result:
 

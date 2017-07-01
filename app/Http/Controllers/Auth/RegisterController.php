@@ -9,11 +9,13 @@ namespace app\Http\Controllers\Auth;
 
 use App\Components\HttpStatusCode;
 use App\Http\Controllers\ApiController;
+use App\Http\Controllers\Supports\VerifyCodeController;
 use App\Models\User;
 use fk\utility\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -53,8 +55,11 @@ class RegisterController extends ApiController
 
     protected function checkVerifyCode()
     {
-        // TODO: unfinished
-        return true;
+        return VerifyCodeController::check(
+            VerifyCodeController::FOR_REGISTER,
+            $this->request->get('mobile'),
+            $this->request->get('verify_code')
+        );
     }
 
     protected function create($data)
