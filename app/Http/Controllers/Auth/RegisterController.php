@@ -7,6 +7,7 @@
 
 namespace app\Http\Controllers\Auth;
 
+use App\Components\ApiResult;
 use App\Components\HttpStatusCode;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Supports\VerifyCodeController;
@@ -134,7 +135,7 @@ class RegisterController extends ApiController
 
         $user = $this->create($request->all());
 
-        if ($user->hasErrors()) return $this->result;
+        if ((false === $user instanceof User) || $user->hasErrors()) return;
 
         event(new Registered($user));
 

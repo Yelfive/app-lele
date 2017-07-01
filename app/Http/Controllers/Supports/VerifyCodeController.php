@@ -22,7 +22,7 @@ class VerifyCodeController extends ApiController
     const TEMPLATE_REGISTER = 'SMS_75870028';
     CONST TEMPLATE_RESET_PASSWORD = 'SMS_75765043';
 
-    protected $forge = false;
+    protected $forge = true;
 
     protected $config;
 
@@ -78,6 +78,8 @@ class VerifyCodeController extends ApiController
 
     protected function generateCode()
     {
+        if ($this->forge) return '123456';
+
         return (string)mt_rand(100000, 999999);
     }
 

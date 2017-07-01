@@ -42,7 +42,7 @@ class ApiResult implements Jsonable
      * - `rules`    based on Laravel [[Illuminate\Validation\Validator]]
      *
      * About rules:
-     * @see Illuminate\Validation\Validator
+     * @see \Illuminate\Validation\Validator
      * @link https://laravel.com/docs/5.4/validation#available-validation-rules
      *
      */
