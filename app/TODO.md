@@ -1,8 +1,3 @@
-- remove friends
-- search friend nearby
-- update coordinate of a user
-- get other's profile
-    - field: is friend
 - sms
     - send
     - register
@@ -12,9 +7,8 @@
     - modify password
     
         > check verify code
-        
-- upload avatar
-- display avatar, uri
-
+- api
+    - reset password
+    - forget password
 
 - backend
