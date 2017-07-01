@@ -92,6 +92,11 @@ class VerifyCodeController extends ApiController
 
     public static function check($for, $mobile, $code): bool
     {
-        return $code && Cache::get("verify_code_{$for}_{$mobile}") == $code;
+        $key = "verify_code_{$for}_{$mobile}";
+        if ($code && Cache::get($key) == $code) {
+            Cache::forget($key);
+            return true;
+        }
+        return false;
     }
 }
