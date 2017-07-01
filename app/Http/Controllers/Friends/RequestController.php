@@ -125,6 +125,13 @@ class RequestController extends ApiController
                 ->message('该用户不存在');
         }
 
+        $alreadyFriends = UserFriends::where(['created_by' => Auth::id(), 'friend_id' => $friend->id])->count();
+        if ($alreadyFriends) {
+            return $this->result
+                ->code(HttpStatusCode::CLIENT_BAD_REQUEST)
+                ->message('你们已经是好友了，不能重复添加');
+        }
+
         DB::beginTransaction();
 
         $friendRequest->update(['status' => FriendRequest::STATUS_AGREED]);
