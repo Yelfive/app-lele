@@ -1,17 +1,8 @@
 - sms
     - send
-    - register
-    
-        > check verify code
-        
-    - modify password
-    
-        > check verify code
-- api
-    - reset password
-    - forget password
-    
 - backend
+
+- friend/nearby should exclude self
 
 # BUG
 

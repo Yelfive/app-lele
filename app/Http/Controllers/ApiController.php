@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Components\ApiResponse;
+use App\Components\HttpStatusCode;
 use App\Exceptions\BadResultException;
 use App\Components\ApiResult;
 use Illuminate\Contracts\Validation\Validator as AbstractValidator;
@@ -88,7 +89,7 @@ class ApiController extends Controller
     {
         $errors = ApiResult::validationFailed($validator->errors());
         if ($request->expectsJson()) {
-            return new JsonResponse($errors, $errors->code);
+            return new JsonResponse($errors, HttpStatusCode::getStatusCode($errors->code));
         }
 
         return redirect()->to($this->getRedirectUrl())
