@@ -16,8 +16,8 @@ use Illuminate\Validation\Rule;
 class VerifyCodeController extends ApiController
 {
 
-    const FOR_REGISTER = 1;
-    const FOR_RESET_PASSWORD = 2;
+    const SCENARIO_REGISTER = 1;
+    const SCENARIO_RESET_PASSWORD = 2;
 
     const TEMPLATE_REGISTER = 'SMS_75870028';
     CONST TEMPLATE_RESET_PASSWORD = 'SMS_75765043';
@@ -30,7 +30,7 @@ class VerifyCodeController extends ApiController
     {
         $this->validateData($this->request->query->all(), [
             'mobile' => 'required|string|size:11',
-            'for' => ['required', Rule::in($this->fors())]
+            'scenario' => ['required', Rule::in($this->scenarios())]
         ]);
         $for = $this->request->get('for');
         $mobile = $this->request->get('mobile');
@@ -63,7 +63,7 @@ class VerifyCodeController extends ApiController
         $signature = $this->config['signature'];
 
         switch ($for) {
-            case static::FOR_RESET_PASSWORD:
+            case static::SCENARIO_RESET_PASSWORD:
                 return [
                     'signature' => $signature,
                     'template' => static::TEMPLATE_RESET_PASSWORD,
@@ -83,10 +83,10 @@ class VerifyCodeController extends ApiController
         return (string)mt_rand(100000, 999999);
     }
 
-    protected function fors()
+    protected function scenarios()
     {
         return [
-            static::FOR_REGISTER, static::FOR_RESET_PASSWORD,
+            static::SCENARIO_REGISTER, static::SCENARIO_RESET_PASSWORD,
         ];
     }
 

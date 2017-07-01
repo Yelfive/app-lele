@@ -45,7 +45,7 @@ class PasswordController extends ApiController
     protected function checkVerifyCode(): bool
     {
         return VerifyCodeController::check(
-            VerifyCodeController::FOR_RESET_PASSWORD,
+            VerifyCodeController::SCENARIO_RESET_PASSWORD,
             $this->request->get('mobile'),
             $this->request->get('verify_code')
         );

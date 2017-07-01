@@ -7,7 +7,6 @@
 
 namespace app\Http\Controllers\Auth;
 
-use App\Components\ApiResult;
 use App\Components\HttpStatusCode;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\Supports\VerifyCodeController;
@@ -16,11 +15,9 @@ use fk\utility\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends ApiController
@@ -57,7 +54,7 @@ class RegisterController extends ApiController
     protected function checkVerifyCode()
     {
         return VerifyCodeController::check(
-            VerifyCodeController::FOR_REGISTER,
+            VerifyCodeController::SCENARIO_REGISTER,
             $this->request->get('mobile'),
             $this->request->get('verify_code')
         );
