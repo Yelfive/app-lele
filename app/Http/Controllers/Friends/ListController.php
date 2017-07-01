@@ -11,10 +11,10 @@ use App\Components\HttpStatusCode;
 use App\Http\Controllers\ApiController;
 use App\Models\Model;
 use App\Models\UserFriends;
+use fk\utility\Database\Eloquent\Builder;
 use fk\utility\Http\Request;
 use fk\utility\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class ListController extends ApiController
 {
@@ -49,7 +49,16 @@ class ListController extends ApiController
 
     public function delete($id)
     {
-        $deleted = UserFriends::where(['friend_id' => $id, 'created_by' => Auth::id()])->delete();
+        $id = (int)$id;
+        if (!$id) {
+            return $this->result->code(HttpStatusCode::CLIENT_VALIDATION_ERROR)
+                ->message('参数id类型有误');
+        }
+        $deleted = UserFriends::where(function (Builder $builder) use ($id) {
+            $builder->where(['friend_id' => $id, 'created_by' => Auth::id()])
+                ->orWhere(['friend_id' => Auth::id(), 'created_by' => $id]);
+        })->delete();
+
         if ($deleted) {
             $this->result->message('删除成功');
         } else {
