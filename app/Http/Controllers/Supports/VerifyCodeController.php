@@ -16,6 +16,8 @@ use Illuminate\Validation\Rule;
 class VerifyCodeController extends ApiController
 {
 
+    const CACHE_PREFIX = 'verify_code_';
+
     const SCENARIO_REGISTER = 1;
     const SCENARIO_RESET_PASSWORD = 2;
 
@@ -32,7 +34,7 @@ class VerifyCodeController extends ApiController
             'mobile' => 'required|string|size:11',
             'scenario' => ['required', Rule::in($this->scenarios())]
         ]);
-        $for = $this->request->get('for');
+        $scenario = $this->request->get('scenario');
         $mobile = $this->request->get('mobile');
         if ($this->forge) {
             $this->result->extend([
@@ -41,13 +43,13 @@ class VerifyCodeController extends ApiController
             $success = true;
         } else {
             $this->config = config('sms.AliDaYu');
-            $content = $this->getContent($for);
+            $content = $this->getContent($scenario);
             $success = $messenger->with($this->config)->send($mobile, $content);
             $code = $content['params']['code'];
         }
 
         if ($success) {
-            Cache::add("code_{$for}_{$mobile}", $code, 600);
+            Cache::add(static::CACHE_PREFIX . "{$scenario}_{$mobile}", $code, 600);
             $this->result->message('验证码获取成功');
         } else {
             $this->result
@@ -90,9 +92,9 @@ class VerifyCodeController extends ApiController
         ];
     }
 
-    public static function check($for, $mobile, $code): bool
+    public static function check($scenario, $mobile, $code): bool
     {
-        $key = "verify_code_{$for}_{$mobile}";
+        $key = static::CACHE_PREFIX . "{$scenario}_{$mobile}";
         if ($code && Cache::get($key) == $code) {
             Cache::forget($key);
             return true;
