@@ -13,5 +13,12 @@ return [
         'accessKey' => 'MYu3tUs4tYIMao0fJIdOcN1zRg8ZK4',
         'topic' => 'sms.topic-cn-hangzhou',
         'signature' => '乐乐'
+    ],
+    'AliDaYu' => [
+        'sender' => \fk\messenger\Sender\AliDaYu::class,
+        'appKey' => '24226067',
+        'secretKey' => '9ce776e8d7121bee4a386fbb2750d663',
+        'signature' => '乐乐',
+        'logPath' => storage_path('sms'),
     ]
 ];

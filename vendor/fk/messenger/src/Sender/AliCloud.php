@@ -10,7 +10,6 @@ namespace fk\messenger\Sender;
 use AliyunMNS\Client;
 use AliyunMNS\Model\BatchSmsAttributes;
 use AliyunMNS\Model\MessageAttributes;
-use AliyunMNS\Exception\MnsException;
 use AliyunMNS\Requests\PublishMessageRequest;
 
 class AliCloud implements SenderInterface

@@ -19,10 +19,12 @@ class VerifyCodeController extends ApiController
     const FOR_REGISTER = 1;
     const FOR_RESET_PASSWORD = 2;
 
-    const TEMPLATE_REGISTER = 'SMS_70850032';
-    CONST TEMPLATE_RESET_PASSWORD = 'SMS_75935032';
+    const TEMPLATE_REGISTER = 'SMS_75870028';
+    CONST TEMPLATE_RESET_PASSWORD = 'SMS_75765043';
 
-    protected $forge = true;
+    protected $forge = false;
+
+    protected $config;
 
     public function sms(Messenger $messenger)
     {
@@ -38,8 +40,9 @@ class VerifyCodeController extends ApiController
             ]);
             $success = true;
         } else {
+            $this->config = config('sms.AliDaYu');
             $content = $this->getContent($for);
-            $success = $messenger->with(config('sms.AliCloud'))->send($mobile, $content);
+            $success = $messenger->with($this->config)->send($mobile, $content);
             $code = $content['params']['code'];
         }
 
@@ -57,14 +60,16 @@ class VerifyCodeController extends ApiController
     {
         if ($this->forge) return $this->generateCode();
 
+        $signature = $this->config['signature'];
+
         switch ($for) {
             case static::FOR_RESET_PASSWORD:
                 return [
-                    'signature' => config('signature'),
+                    'signature' => $signature,
                     'template' => static::TEMPLATE_RESET_PASSWORD,
                     'params' => [
                         'code' => $code = $this->generateCode(),
-                        'app' => config('signature')
+                        'app' => $signature
                     ],
                     'message' => "验证码{$code}，您正在修改乐乐密码，感谢您的支持！",
                 ];
