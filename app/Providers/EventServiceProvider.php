@@ -2,14 +2,13 @@
 
 namespace App\Providers;
 
-use App\Models\Model;
-use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use App\Events\{
     ModelSaving, UserCreated, UserCreating, UserUpdated, UserSaved
 };
 use App\Listeners\{
-    CreateIMAccount, FillModel, UpdateIdentity, GenerateLeLeNo, SaveToMongo
+    CreateIMAccount, FillModel, UpdateIdentity, GenerateLeLeNo, SaveToMongo,
+    UpdateIMProfile
 };
 
 class EventServiceProvider extends ServiceProvider
@@ -24,7 +23,7 @@ class EventServiceProvider extends ServiceProvider
             FillModel::class,
         ],
         UserSaved::class => [
-            SaveToMongo::class
+            SaveToMongo::class, UpdateIMProfile::class
         ],
         UserUpdated::class => [
             UpdateIdentity::class

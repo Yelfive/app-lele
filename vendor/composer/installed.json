@@ -5099,5 +5099,31 @@
             "mongodb",
             "persistence"
         ]
+    },
+    {
+        "name": "fk/messenger",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Yelfive/fk-messenger.git",
+            "reference": "fcfcaa4ab65978f6c0e4789edc9b833104cdf93b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://files.phpcomposer.com/files/Yelfive/fk-messenger/fcfcaa4ab65978f6c0e4789edc9b833104cdf93b.zip",
+            "reference": "fcfcaa4ab65978f6c0e4789edc9b833104cdf93b",
+            "shasum": ""
+        },
+        "time": "2017-07-01T00:26:30+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "fk\\messenger\\": "./src",
+                "AliyunMNS\\": "./lib/AliCloud/AliyunMNS"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/"
     }
 ]

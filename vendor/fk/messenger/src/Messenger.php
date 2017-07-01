@@ -9,8 +9,12 @@ namespace fk\messenger;
 
 class Messenger
 {
-    public function with(string $channel)
+    public $with;
+
+    public function with(string $with)
     {
+        $this->with = $with;
+        return $this;
     }
 
     public function send()

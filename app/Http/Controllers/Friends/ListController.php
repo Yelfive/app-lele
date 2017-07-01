@@ -14,6 +14,7 @@ use App\Models\UserFriends;
 use fk\utility\Database\Eloquent\Builder;
 use fk\utility\Http\Request;
 use fk\utility\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Support\Facades\Auth;
 
 class ListController extends ApiController
@@ -27,7 +28,6 @@ class ListController extends ApiController
                 'id', 'nickname', 'state_code', 'mobile', 'avatar', 'account', 'im_account', 'sex',
                 'city_name', 'city_code', 'age', 'it_says', 'address', 'created_at', 'updated_at'
             ],
-            'uf' => ['friend_nickname']
         ];
     }
 
@@ -36,6 +36,7 @@ class ListController extends ApiController
         /** @var LengthAwarePaginator $paginator */
         $paginator = Model::from('user_friends as uf')
             ->select($this->listFields())
+            ->addSelect(new Expression('IF(l_uf.friend_nickname != "", l_uf.friend_nickname, l_u.nickname) friend_nickname'))
             ->where('created_by', Auth::id())
             ->leftJoin('user as u', 'u.id', '=', 'uf.friend_id')
             ->where('uf.created_by', Auth::id())

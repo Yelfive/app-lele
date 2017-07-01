@@ -10,5 +10,9 @@
 - api
     - reset password
     - forget password
-
+    
 - backend
+
+# BUG
+
+- session id is not reset after login

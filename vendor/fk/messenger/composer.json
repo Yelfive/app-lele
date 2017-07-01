@@ -5,10 +5,5 @@
       "fk\\messenger\\": "./src",
       "AliyunMNS\\": "./lib/AliCloud/AliyunMNS"
     }
-  },
-  "require": {
-    "guzzlehttp/guzzle": "*",
-    "guzzlehttp/promises": "*",
-    "guzzlehttp/psr7": "*"
   }
 }

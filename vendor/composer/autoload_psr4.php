@@ -11,6 +11,7 @@ return array(
     'fk\\utility\\' => array($vendorDir . '/fk/laravel-utility'),
     'fk\\reference\\' => array($vendorDir . '/fk/laravel-references/generator'),
     'fk\\pay\\' => array($vendorDir . '/fk/pay'),
+    'fk\\messenger\\' => array($vendorDir . '/fk/messenger/src'),
     'fk\\http\\' => array($vendorDir . '/fk/http-status/src'),
     'fk\\helpers\\' => array($vendorDir . '/fk/helpers/src'),
     'fk\\express\\' => array($vendorDir . '/fk/express/src'),
@@ -64,4 +65,5 @@ return array(
     'Carbon\\' => array($vendorDir . '/nesbot/carbon/src/Carbon'),
     'Barryvdh\\LaravelIdeHelper\\' => array($vendorDir . '/barryvdh/laravel-ide-helper/src'),
     'App\\' => array($baseDir . '/app'),
+    'AliyunMNS\\' => array($vendorDir . '/fk/messenger/lib/AliCloud/AliyunMNS'),
 );

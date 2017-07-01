@@ -8,12 +8,14 @@
 namespace App\Http\Controllers\Supports;
 
 use App\Http\Controllers\ApiController;
+use fk\messenger\Messenger;
 
 class VerifyCodeController extends ApiController
 {
-    public function sms()
+    public function sms(Messenger $messenger)
     {
-        // TODO: send verify sms code
+
+        $messenger->send();
         $this->result->message('验证码获取成功');
     }
 }

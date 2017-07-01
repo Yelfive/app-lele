@@ -15,6 +15,7 @@
         "fk/http-status": "dev-master",
         "fk/laravel-references": "dev-master",
         "fk/laravel-utility": "dev-master",
+        "fk/messenger": "dev-master",
         "fk/pay": "dev-master",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",

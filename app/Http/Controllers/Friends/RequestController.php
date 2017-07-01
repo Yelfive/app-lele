@@ -145,13 +145,13 @@ class RequestController extends ApiController
          */
         $youAreMime = UserFriends::create([
             'friend_id' => $friendRequest->friend_id,
-            'friend_nickname' => $friend->nickname,
+            'friend_nickname' => '',
             'created_by' => $friendRequest->sender,
         ]);
 
         $iAmYours = UserFriends::create([
             'friend_id' => $friendRequest->sender,
-            'friend_nickname' => Auth::user()->nickname,
+            'friend_nickname' => '',
             'created_by' => $friendRequest->friend_id,
         ]);
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "afdb6170563877cd0a69b8462b3e43ee",
+    "content-hash": "2bdc367ef7e2a904ee325bd13130e0a7",
     "packages": [
         {
             "name": "barryvdh/laravel-ide-helper",
@@ -874,6 +874,30 @@
             "time": "2017-04-28 15:52:04"
         },
         {
+            "name": "fk/messenger",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Yelfive/fk-messenger.git",
+                "reference": "fcfcaa4ab65978f6c0e4789edc9b833104cdf93b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://files.phpcomposer.com/files/Yelfive/fk-messenger/fcfcaa4ab65978f6c0e4789edc9b833104cdf93b.zip",
+                "reference": "fcfcaa4ab65978f6c0e4789edc9b833104cdf93b",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "fk\\messenger\\": "./src",
+                    "AliyunMNS\\": "./lib/AliCloud/AliyunMNS"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "time": "2017-07-01 00:26:30"
+        },
+        {
             "name": "fk/pay",
             "version": "dev-master",
             "source": {
@@ -1317,7 +1341,7 @@
                 "mongodb",
                 "persistence"
             ],
-            "time": "2017-05-25 14:13:41"
+            "time": "2017-05-25T14:13:41+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -4941,6 +4965,7 @@
         "fk/http-status": 20,
         "fk/laravel-references": 20,
         "fk/laravel-utility": 20,
+        "fk/messenger": 20,
         "fk/pay": 20,
         "mongodb/mongodb": 20
     },
