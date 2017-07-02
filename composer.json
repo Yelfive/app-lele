@@ -19,7 +19,8 @@
         "fk/pay": "dev-master",
         "laravel/framework": "5.4.*",
         "laravel/tinker": "~1.0",
-        "mongodb/mongodb": "^1.2@dev"
+        "mongodb/mongodb": "^1.2@dev",
+        "yunpian/yunpian-php-sdk": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

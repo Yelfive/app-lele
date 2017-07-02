@@ -17,6 +17,7 @@ return array(
     'fk\\express\\' => array($vendorDir . '/fk/express/src'),
     'fk\\ease\\mob\\' => array($vendorDir . '/fk/ease-mob/src'),
     'Zend\\Diactoros\\' => array($vendorDir . '/zendframework/zend-diactoros/src'),
+    'Yunpian\\Sdk\\' => array($vendorDir . '/yunpian/yunpian-php-sdk/src'),
     'XdgBaseDir\\' => array($vendorDir . '/dnoegel/php-xdg-base-dir/src'),
     'Webmozart\\Assert\\' => array($vendorDir . '/webmozart/assert/src'),
     'TijsVerkoyen\\CssToInlineStyles\\' => array($vendorDir . '/tijsverkoyen/css-to-inline-styles/src'),

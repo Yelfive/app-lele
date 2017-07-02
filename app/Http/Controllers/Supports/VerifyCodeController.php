@@ -8,8 +8,9 @@
 namespace App\Http\Controllers\Supports;
 
 use App\Components\HttpStatusCode;
+use App\Components\Messenger;
 use App\Http\Controllers\ApiController;
-use fk\messenger\Messenger;
+use fk\messenger\SendFailedException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
 
@@ -24,7 +25,7 @@ class VerifyCodeController extends ApiController
     const TEMPLATE_REGISTER = 'SMS_75870028';
     CONST TEMPLATE_RESET_PASSWORD = 'SMS_75765043';
 
-    protected $forge = true;
+    protected $forge = false;
 
     protected $config;
 
@@ -40,41 +41,34 @@ class VerifyCodeController extends ApiController
             $this->result->extend([
                 'verify_code' => $code = $this->generateCode()
             ]);
-            $success = true;
         } else {
-            $this->config = config('sms.AliDaYu');
-            $content = $this->getContent($scenario);
-            $success = $messenger->with($this->config)->send($mobile, $content);
-            $code = $content['params']['code'];
+            $this->config = $messenger->with;
+            $data = $this->getContent($scenario, $code);
+            try {
+                $messenger->send($mobile, $data);
+            } catch (SendFailedException $e) {
+                $this->result
+                    ->code(HttpStatusCode::SERVER_THIRD_PARTY_ERROR)
+                    ->message('验证码获取失败');
+            }
         }
 
-        if ($success) {
-            Cache::add(static::CACHE_PREFIX . "{$scenario}_{$mobile}", $code, 600);
-            $this->result->message('验证码获取成功');
-        } else {
-            $this->result
-                ->code(HttpStatusCode::SERVER_THIRD_PARTY_ERROR)
-                ->message('验证码获取失败');
-        }
+        Cache::add(static::CACHE_PREFIX . "{$scenario}_{$mobile}", $code, 600);
+        $this->result->message('验证码获取成功');
     }
 
-    protected function getContent($for)
+    protected function getContent($for, &$code)
     {
         if ($this->forge) return $this->generateCode();
 
-        $signature = $this->config['signature'];
+        $code = $this->generateCode();
+        $app = $this->config['app'];
 
         switch ($for) {
+            case static::SCENARIO_REGISTER:
+                return "验证码{$code}，您正在注册{$app}，感谢您的支持！";
             case static::SCENARIO_RESET_PASSWORD:
-                return [
-                    'signature' => $signature,
-                    'template' => static::TEMPLATE_RESET_PASSWORD,
-                    'params' => [
-                        'code' => $code = $this->generateCode(),
-                        'app' => $signature
-                    ],
-                    'message' => "验证码{$code}，您正在修改乐乐密码，感谢您的支持！",
-                ];
+                return "验证码{$code}，您正在修改{$app}密码，感谢您的支持！";
         }
     }
 

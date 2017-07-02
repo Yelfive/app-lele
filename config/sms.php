@@ -6,6 +6,7 @@
  */
 
 return [
+    'default' => 'YunPian',
     'AliCloud' => [
         'sender' => \fk\messenger\Sender\AliCloud::class,
         'endPoint' => 'https://1082184838736512.mns.cn-hangzhou.aliyuncs.com/',
@@ -20,5 +21,11 @@ return [
         'secretKey' => '9ce776e8d7121bee4a386fbb2750d663',
         'signature' => '乐乐',
         'logPath' => storage_path('sms'),
-    ]
+    ],
+    'YunPian' => [
+        'sender' => \fk\messenger\Sender\YunPian::class,
+        'app' => '乐乐',
+        'signature' => '乐乐交友',
+        'apiKey' => '3aae4db80d9a52ca6def01795669874f',
+    ],
 ];

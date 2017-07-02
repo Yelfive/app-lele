@@ -14,9 +14,9 @@ class ComposerStaticInitf47fe1f22316bac2cdb698713d4ae4a4
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
-        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
         '3a37ebac017bc098e9a86b35401e7a68' => __DIR__ . '/..' . '/mongodb/mongodb/src/functions.php',
@@ -42,6 +42,10 @@ class ComposerStaticInitf47fe1f22316bac2cdb698713d4ae4a4
         'Z' => 
         array (
             'Zend\\Diactoros\\' => 15,
+        ),
+        'Y' => 
+        array (
+            'Yunpian\\Sdk\\' => 12,
         ),
         'X' => 
         array (
@@ -185,6 +189,10 @@ class ComposerStaticInitf47fe1f22316bac2cdb698713d4ae4a4
         'Zend\\Diactoros\\' => 
         array (
             0 => __DIR__ . '/..' . '/zendframework/zend-diactoros/src',
+        ),
+        'Yunpian\\Sdk\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src',
         ),
         'XdgBaseDir\\' => 
         array (
@@ -590,6 +598,7 @@ class ComposerStaticInitf47fe1f22316bac2cdb698713d4ae4a4
         'App\\Listeners\\FillModel' => __DIR__ . '/../..' . '/app/Listeners/FillModel.php',
         'App\\Listeners\\GenerateLeLeNo' => __DIR__ . '/../..' . '/app/Listeners/GenerateLeLeNo.php',
         'App\\Listeners\\SaveToMongo' => __DIR__ . '/../..' . '/app/Listeners/SaveToMongo.php',
+        'App\\Listeners\\UpdateIMProfile' => __DIR__ . '/../..' . '/app/Listeners/UpdateIMProfile.php',
         'App\\Listeners\\UpdateIdentity' => __DIR__ . '/../..' . '/app/Listeners/UpdateIdentity.php',
         'App\\Models\\FriendRequest' => __DIR__ . '/../..' . '/app/Models/FriendRequest.php',
         'App\\Models\\Model' => __DIR__ . '/../..' . '/app/Models/Model.php',
@@ -4172,6 +4181,26 @@ class ComposerStaticInitf47fe1f22316bac2cdb698713d4ae4a4
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Rule\\Rule' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Rule/Rule.php',
         'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',
         'XdgBaseDir\\Xdg' => __DIR__ . '/..' . '/dnoegel/php-xdg-base-dir/src/Xdg.php',
+        'Yunpian\\Sdk\\Api\\ApiFactory' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/Api/ApiFactory.php',
+        'Yunpian\\Sdk\\Api\\CommonResultHandler' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/Api/YunpianApiResult.php',
+        'Yunpian\\Sdk\\Api\\FlowApi' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/Api/FlowApi.php',
+        'Yunpian\\Sdk\\Api\\ResultHandler' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/Api/YunpianApiResult.php',
+        'Yunpian\\Sdk\\Api\\SignApi' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/Api/SignApi.php',
+        'Yunpian\\Sdk\\Api\\SmsApi' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/Api/SmsApi.php',
+        'Yunpian\\Sdk\\Api\\TplApi' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/Api/TplApi.php',
+        'Yunpian\\Sdk\\Api\\UserApi' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/Api/UserApi.php',
+        'Yunpian\\Sdk\\Api\\VoiceApi' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/Api/VoiceApi.php',
+        'Yunpian\\Sdk\\Api\\VoidApi' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/Api/VoidApi.php',
+        'Yunpian\\Sdk\\Api\\YunpianApi' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/Api/YunpianApi.php',
+        'Yunpian\\Sdk\\Api\\YunpianApiResult' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/Api/YunpianApiResult.php',
+        'Yunpian\\Sdk\\Constant\\Code' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/Constant/Code.php',
+        'Yunpian\\Sdk\\Constant\\YunpianConstant' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/Constant/YunpianConstant.php',
+        'Yunpian\\Sdk\\Model\\Result' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/Model/Result.php',
+        'Yunpian\\Sdk\\Util\\ApiUtil' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/Util/ApiUtil.php',
+        'Yunpian\\Sdk\\YunpianClient' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/YunpianClient.php',
+        'Yunpian\\Sdk\\YunpianConf' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/YunpianConf.php',
+        'Yunpian\\Sdk\\YunpianException' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/YunpianException.php',
+        'Yunpian\\Sdk\\YunpianGuzzle' => __DIR__ . '/..' . '/yunpian/yunpian-php-sdk/src/YunpianGuzzle.php',
         'Zend\\Diactoros\\AbstractSerializer' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/AbstractSerializer.php',
         'Zend\\Diactoros\\CallbackStream' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/CallbackStream.php',
         'Zend\\Diactoros\\Exception\\DeprecatedMethodException' => __DIR__ . '/..' . '/zendframework/zend-diactoros/src/Exception/DeprecatedMethodException.php',
@@ -4218,6 +4247,7 @@ class ComposerStaticInitf47fe1f22316bac2cdb698713d4ae4a4
         'fk\\http\\StatusCode' => __DIR__ . '/..' . '/fk/http-status/src/StatusCode.php',
         'fk\\messenger\\Messenger' => __DIR__ . '/..' . '/fk/messenger/src/Messenger.php',
         'fk\\messenger\\Sender\\AliCloud' => __DIR__ . '/..' . '/fk/messenger/src/Sender/AliCloud.php',
+        'fk\\messenger\\Sender\\AliDaYu' => __DIR__ . '/..' . '/fk/messenger/src/Sender/AliDaYu.php',
         'fk\\messenger\\Sender\\SenderInterface' => __DIR__ . '/..' . '/fk/messenger/src/Sender/SenderInterface.php',
         'fk\\pay\\Component' => __DIR__ . '/..' . '/fk/pay/Component.php',
         'fk\\pay\\Constant' => __DIR__ . '/..' . '/fk/pay/Constant.php',
