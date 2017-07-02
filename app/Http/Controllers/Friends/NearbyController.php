@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Friends;
 use App\Components\MongoDB;
 use App\Http\Controllers\ApiController;
 use fk\utility\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NearbyController extends ApiController
 {
@@ -34,11 +35,15 @@ class NearbyController extends ApiController
             'spherical' => true
         ];
 
+        $geoNear['query'] = [
+            '_id' => [
+                '$ne' => Auth::id()
+            ]
+        ];
+
         if ($sex = $request->get('sex')) {
-            $geoNear['query'] = [
-                'sex' => [
-                    '$eq' => $sex
-                ]
+            $geoNear['query']['sex'] = [
+                '$eq' => $sex
             ];
         }
 
