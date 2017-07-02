@@ -7,9 +7,11 @@
 
 namespace App\Http\Controllers\Supports;
 
+use App\Components\ApiResult;
 use App\Components\HttpStatusCode;
 use App\Components\Messenger;
 use App\Http\Controllers\ApiController;
+use App\Models\User;
 use fk\messenger\SendFailedException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
@@ -44,10 +46,12 @@ class VerifyCodeController extends ApiController
         } else {
             $this->config = $messenger->with;
             $data = $this->getContent($scenario, $code);
+            if ($data instanceof ApiResult) return $data;
+
             try {
                 $messenger->send($mobile, $data);
             } catch (SendFailedException $e) {
-                $this->result
+                return $this->result
                     ->code(HttpStatusCode::SERVER_THIRD_PARTY_ERROR)
                     ->message('验证码获取失败');
             }
@@ -57,14 +61,26 @@ class VerifyCodeController extends ApiController
         $this->result->message('验证码获取成功');
     }
 
-    protected function getContent($for, &$code)
+    protected function getContent($scenario, &$code)
     {
+        if ($scenario == static::SCENARIO_RESET_PASSWORD) {
+            $mobileRegistered = User::where([
+                'mobile' => $this->request->get('mobile'),
+                'deleted' => User::DELETED_NO
+            ])->count();
+            if (!$mobileRegistered) {
+                return $this->result
+                    ->code(HttpStatusCode::CLIENT_VALIDATION_ERROR)
+                    ->message('手机号未注册，请检查您的手机号');
+            }
+        }
+
         if ($this->forge) return $this->generateCode();
 
         $code = $this->generateCode();
         $app = $this->config['app'];
 
-        switch ($for) {
+        switch ($scenario) {
             case static::SCENARIO_REGISTER:
                 return "验证码{$code}，您正在注册{$app}，感谢您的支持！";
             case static::SCENARIO_RESET_PASSWORD:
