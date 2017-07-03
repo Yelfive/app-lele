@@ -51,13 +51,13 @@ class RequestController extends ApiController
                 ->message('已发送好友申请，不能重复发送');
         }
 
-        $alreadyFriends = UserFriends::where(['friend_id' => $friendID, 'created_by' => Auth::id()])->count();
+        $alreadyFriends = UserFriends::where(['friend_id' => $friend->id, 'created_by' => Auth::id()])->count();
         if ($alreadyFriends) {
             return $this->result->code(HttpStatusCode::SUCCESS_ACCEPTED)
                 ->message('TA已经是您的好友了,不需要再添加啦');
         }
 
-        $from = $request->input('friend_id') ? FriendRequest::FROM_SEARCH_NEARBY : FriendRequest::FROM_MOBILE_SPECIFY;
+        $from = $friendID ? FriendRequest::FROM_SEARCH_NEARBY : FriendRequest::FROM_MOBILE_SPECIFY;
 
         FriendRequest::create([
             'sender' => Auth::id(),
