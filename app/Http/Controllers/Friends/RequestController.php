@@ -117,15 +117,15 @@ class RequestController extends ApiController
                 ->message('该好友申请不存在');
         }
 
-        /** @var User $friend */
-        $friend = User::where('id', $friendRequest->sender)->first();
-        if (!$friend) {
+        /** @var User $sender */
+        $sender = User::where('id', $friendRequest->sender)->first();
+        if (!$sender) {
             return $this->result
                 ->code(HttpStatusCode::CLIENT_NOT_FOUND)
                 ->message('该用户不存在');
         }
 
-        $alreadyFriends = UserFriends::where(['created_by' => Auth::id(), 'friend_id' => $friend->id])->count();
+        $alreadyFriends = UserFriends::where(['created_by' => $sender->id, 'friend_id' => Auth::id()])->count();
         if ($alreadyFriends) {
             return $this->result
                 ->code(HttpStatusCode::CLIENT_BAD_REQUEST)
@@ -135,9 +135,8 @@ class RequestController extends ApiController
         DB::beginTransaction();
 
         $friendRequest->update(['status' => FriendRequest::STATUS_AGREED]);
-        if ($friendRequest->hasErrors()) {
-            $this->agreeFailedResponse();
-        }
+
+        if ($friendRequest->hasErrors()) return $this->agreeFailedResponse();
 
         /**
          * @var User $youAreMime
@@ -158,7 +157,7 @@ class RequestController extends ApiController
         if ($youAreMime->hasErrors() || $iAmYours->hasErrors()) {
             $this->agreeFailedResponse();
         } else {
-            $IM->addFriend(Auth::user()->im_account, $friend->im_account);
+            $IM->addFriend(Auth::user()->im_account, $sender->im_account);
             $this->agreeSuccessResponse();
         }
     }
@@ -210,7 +209,6 @@ class RequestController extends ApiController
     {
         /** @var LengthAwarePaginator $paginator */
         $builder = FriendRequest::from('friend_request as r')
-            ->select(['u.*', 'u.id as uid', 'r.*'])
             ->select([
                 'u' => [
                     'id as uid', 'nickname', 'state_code', 'mobile', 'avatar', 'account',
