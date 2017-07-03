@@ -57,7 +57,7 @@ class VerifyCodeController extends ApiController
             }
         }
 
-        Cache::add(static::CACHE_PREFIX . "{$scenario}_{$mobile}", $code, 600);
+        Cache::put(static::CACHE_PREFIX . "{$scenario}_{$mobile}", $code, 10); // 10 minutes
         $this->result->message('验证码获取成功');
     }
 
