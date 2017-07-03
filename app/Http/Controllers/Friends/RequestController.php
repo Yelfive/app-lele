@@ -44,7 +44,7 @@ class RequestController extends ApiController
                 ->message('用户不存在,不能添加好友');
         }
 
-        $requestSentAlready = FriendRequest::where(['friend_id' => $friendID, 'sender' => Auth::id(), 'status' => FriendRequest::STATUS_UNHANDLED])->count();
+        $requestSentAlready = FriendRequest::where(['friend_id' => $friend->id, 'sender' => Auth::id(), 'status' => FriendRequest::STATUS_UNHANDLED])->count();
         if ($requestSentAlready) {
             return $this->result
                 ->code(HttpStatusCode::SUCCESS_ACCEPTED)
