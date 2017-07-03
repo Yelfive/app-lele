@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Events\{
-    UserCreated, UserCreating, UserSaved
+    UserCreated, UserCreating, UserSaved, UserUpdated
 };
 use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\UploadedFile;
@@ -43,6 +43,7 @@ class User extends Model implements Authenticatable
     public $events = [
         'creating' => UserCreating::class,
         'created' => UserCreated::class,
+        'updated' => UserUpdated::class,
         'saved' => UserSaved::class,
     ];
 

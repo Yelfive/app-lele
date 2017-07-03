@@ -25,11 +25,15 @@ class ProfileController extends ApiController
     public function edit(Request $request)
     {
         $this->validate($request, [
-            'avatar' => 'file',
+            'avatar' => 'image',
         ]);
 
         $user = Auth::user();
-        $user->fill($request->input());
+        $data = $request->input();
+
+        if (isset($data['mobile'])) unset($data['mobile']);
+
+        $user->fill($data);
         if ($password = $request->input('password')) {
             $user->password_hash = Hash::make($password);
         } else if ($avatar = $request->file('avatar')) {
@@ -43,7 +47,7 @@ class ProfileController extends ApiController
         } else {
             $this->result
                 ->code(HttpStatusCode::CLIENT_VALIDATION_ERROR)
-                ->message('更新成功')
+                ->message('更新失败')
                 ->extend(['errors' => $user->errors->toArray()]);
         }
     }
