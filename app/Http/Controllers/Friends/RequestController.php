@@ -118,7 +118,7 @@ class RequestController extends ApiController
         }
 
         /** @var User $friend */
-        $friend = User::where('id', $friendRequest->friend_id)->first();
+        $friend = User::where('id', $friendRequest->sender)->first();
         if (!$friend) {
             return $this->result
                 ->code(HttpStatusCode::CLIENT_NOT_FOUND)
