@@ -234,8 +234,9 @@ class User extends Model implements Authenticatable
 
     public function getProfile()
     {
-        $attributes = $this->getAttributes(null, ['password_hash', 'deleted', 'updated_at']);
+        $attributes = $this->getAttributes(null, ['password_hash', 'deleted']);
         $attributes['created_at'] = strtotime($attributes['created_at']);
+        $attributes['updated_at'] = strtotime($attributes['updated_at']);
         return $attributes;
     }
 
