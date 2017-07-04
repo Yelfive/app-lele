@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Auth;
 
 class HomepageController extends ApiController
 {
-    public function profile($id, Request $request)
+    public function profile($id)
     {
         $this->validateData(['id' => $id], [
             'id' => 'required|int|min:0'

@@ -22,8 +22,9 @@ class UserUpdated
 
     /**
      * Create a new event instance.
+     * @param User $model
      */
-    public function __construct($model)
+    public function __construct(User $model)
     {
         $this->model = $model;
     }
