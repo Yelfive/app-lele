@@ -43,6 +43,7 @@ class ListController extends ApiController
             ->orderBy('uf.id', 'DESC')
             ->paginate($request->get('per_page', 1000));
 
+        Model::$serializeDateAsInteger = true;
         $this->result
             ->message('获取好友列表成功')
             ->extend($paginator->toFKStyle());
