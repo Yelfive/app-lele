@@ -17,6 +17,7 @@ use fk\ease\mob\IM;
 use fk\utility\Database\Eloquent\Builder;
 use fk\utility\Http\Request;
 use fk\utility\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Query\Expression;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -219,17 +220,62 @@ class RequestController extends ApiController
             ->leftJoin('user as u', function (JoinClause $join) {
                 return $join->on('u.id', 'r.sender')->orOn('u.id', 'r.friend_id');
             })
-            ->where(function (Builder $builder) {
-                $builder->where('sender', Auth::id())
-                    ->orWhere('friend_id', Auth::id());
-            })
             ->where('u.id', '!=', Auth::id())
+            ->where($this->notDeleted())
             ->orderBy('r.id', 'desc');
 
-        $paginator = $builder->paginate();
         FriendRequest::$serializeDateAsInteger = true;
+        $paginator = $builder->paginate($this->request->get('per_page', 20));
 
         $this->result->message('获取列表成功')
             ->extend($paginator->toFKStyle());
     }
+
+    protected function notDeleted()
+    {
+        return function (Builder $builder) {
+            $builder
+                // Not deleted when I'm a sender
+                ->where($this->notDeletedWhen(FriendRequest::DELETED_BY_SENDER))
+                // Not deleted when I'm a receiver
+                ->orWhere($this->notDeletedWhen(FriendRequest::DELETED_BY_RECEIVER));
+        };
+    }
+
+    protected function notDeletedWhen($deletedBy)
+    {
+        return function (Builder $builder) use ($deletedBy) {
+            $field = $deletedBy === FriendRequest::DELETED_BY_SENDER ? 'sender' : 'friend_id';
+            $builder->where("r.$field", Auth::id())
+                ->where(
+                    'r.deleted_by',
+                    '!=',
+                    new Expression("l_r.deleted_by|$deletedBy")
+                );
+        };
+    }
+
+    public function clear()
+    {
+        $roles = [
+            FriendRequest::DELETED_BY_SENDER,
+            FriendRequest::DELETED_BY_RECEIVER
+        ];
+
+        foreach ($roles as $role) {
+            $this->clearAs($role);
+        }
+
+        $this->result->message('清空列表成功');
+    }
+
+    protected function clearAs($role)
+    {
+        $field = $role === FriendRequest::DELETED_BY_SENDER ? 'sender' : 'friend_id';
+        $deletedBy = new Expression("deleted_by|$role");
+        FriendRequest::where($field, Auth::id())
+            ->where('deleted_by', '!=', $deletedBy)
+            ->update(['deleted_by' => $deletedBy]);
+    }
+
 }

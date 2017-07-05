@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::post('friends/request', 'RequestController@send');
         Route::put('friends/request', 'RequestController@agree');
         Route::delete('friends/request', 'RequestController@decline');
+        Route::delete('friends/requests', 'RequestController@clear');
         Route::get('friends/request', 'RequestController@index');
         Route::get('friends/nearby', 'NearbyController@search');
 

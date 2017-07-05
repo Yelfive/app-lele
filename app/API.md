@@ -561,3 +561,21 @@ http://39.108.76.218/api/
         "message": "更新成功"
     }
     ```
+    
+# 12. 清空好友请求列表
+
+- API: friends/requests
+
+    > Notice: friend`s`,request`s` 都带`s`
+
+- Method: DELETE
+- Login: Yes
+- Params: None
+- Result:
+
+    ```json
+    {
+        "code": 200,
+        "message": "清空列表成功"
+    }
+    ```
