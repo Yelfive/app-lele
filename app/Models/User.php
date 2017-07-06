@@ -268,6 +268,7 @@ class User extends Model implements Authenticatable
 
         $as = $this->im_account ?: $this->hashIMAccount();
         $filename = $file->storeAs('images/avatar', $as . '.' . $file->extension());
+        $this->original['avatar'] = ''; // clear old avatar to make it dirty
 
         return $this->avatar = basename($filename);
     }
