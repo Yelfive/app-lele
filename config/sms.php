@@ -24,8 +24,8 @@ return [
     ],
     'YunPian' => [
         'sender' => \fk\messenger\Sender\YunPian::class,
-        'app' => '乐乐',
-        'signature' => '乐乐交友',
+        'app' => '乐聊',
+        'signature' => '乐聊交友',
         'apiKey' => '3aae4db80d9a52ca6def01795669874f',
     ],
 ];
