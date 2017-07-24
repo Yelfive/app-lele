@@ -27,6 +27,13 @@ class RequestController extends ApiController
 {
     public function send(Request $request)
     {
+        $_mobile = $request->request->get('mobile');
+        if ($_mobile && is_numeric($_mobile) && strlen($_mobile) < 11) {
+            $request->request->set('account', $_mobile);
+            $request->request->remove('mobile');
+        }
+        unset($_mobile);
+
         $this->validate($request, [
             'friend_id' => 'required_without:mobile,account|int|min:0',
             'mobile' => 'required_without:friend_id,account|string|size:11',

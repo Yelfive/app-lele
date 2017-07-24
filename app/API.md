@@ -156,13 +156,13 @@ http://39.108.76.218/api/
 - Login: Yes
 - Params:
 
-    > 三者必填其一
+    > 三者必填其一, 优先级：friend_id > mobile > account
 
     |Field          |Required   |Default| Example
     |---            |---        |---    |---
     |friend_id      |Yes        |       | 好友ID 
-    |mobile         |Yes        |       | 手机号
-    |account        |Yes        |       | 乐乐号
+    |mobile         |Yes        |       | 手机号, 手机号长度低于11时, 判定为乐乐号
+    |account        |No         |       | 乐乐号,
 
 - Result:
 
