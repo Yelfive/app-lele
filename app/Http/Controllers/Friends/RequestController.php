@@ -28,14 +28,17 @@ class RequestController extends ApiController
     public function send(Request $request)
     {
         $this->validate($request, [
-            'friend_id' => 'required_without:mobile|int|min:0',
-            'mobile' => 'required_without:friend_id|string|size:11',
+            'friend_id' => 'required_without:mobile,account|int|min:0',
+            'mobile' => 'required_without:friend_id,account|string|size:11',
+            'account' => 'required_without:friend_id,mobile|int',
         ]);
 
         if ($friendID = $request->input('friend_id')) {
             $condition = ['id' => $friendID];
+        } else if ($mobile = $request->input('mobile')) {
+            $condition = ['mobile' => $mobile];
         } else {
-            $condition = ['mobile' => $request->input('mobile')];
+            $condition = ['account' => $request->input('account')];
         }
         /** @var User $friend */
         $friend = User::where($condition)->where('deleted', User::DELETED_NO)->first(['id']);
@@ -58,17 +61,26 @@ class RequestController extends ApiController
                 ->message('TA已经是您的好友了,不需要再添加啦');
         }
 
-        $from = $friendID ? FriendRequest::FROM_SEARCH_NEARBY : FriendRequest::FROM_MOBILE_SPECIFY;
-
         FriendRequest::create([
             'sender' => Auth::id(),
             'friend_id' => $friend->id,
             'remark' => $request->input('remark', ''),
-            'from' => $from,
+            'from' => $this->getRequestFrom(),
             'distance' => $this->distanceToMe($friend),
         ]);
 
         return $this->result->message('好友请求发送成功');
+    }
+
+    protected function getRequestFrom()
+    {
+        if ($this->request->has('friend_id')) {
+            return FriendRequest::FROM_SEARCH_NEARBY;
+        } else if ($this->request->has('mobile')) {
+            return FriendRequest::FROM_MOBILE_SPECIFY;
+        } else {
+            return FriendRequest::FROM_ACCOUNT_SPECIFY;
+        }
     }
 
     protected function distanceToMe(User $user): int

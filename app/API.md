@@ -61,6 +61,7 @@ http://39.108.76.218/api/
     |sex            |N          |unknown| male=男,female=女
     |address        |N          |       | 生活地区
     |avatar         |N          |       | 用户头像
+    |age            |N          |0      | 用户年龄
 
 - Result:
 
@@ -155,10 +156,13 @@ http://39.108.76.218/api/
 - Login: Yes
 - Params:
 
-    |Field          |Required   |Default|Example
+    > 三者必填其一
+
+    |Field          |Required   |Default| Example
     |---            |---        |---    |---
-    |friend_id      |Yes        |       |好友ID.两者必选其一, 
-    |mobile         |Yes        |       |手机号.两者必选其一
+    |friend_id      |Yes        |       | 好友ID 
+    |mobile         |Yes        |       | 手机号
+    |account        |Yes        |       | 乐乐号
 
 - Result:
 

@@ -24,6 +24,7 @@ class FriendRequest extends Model
 
     const FROM_MOBILE_SPECIFY = 1;
     const FROM_SEARCH_NEARBY = 2;
+    const FROM_ACCOUNT_SPECIFY = 3;
 
     const STATUS_DECLINED = -1;
     const STATUS_UNHANDLED = 0;
