@@ -35,9 +35,9 @@ class RequestController extends ApiController
         unset($_mobile);
 
         $this->validate($request, [
-            'friend_id' => 'required_without:mobile,account|int|min:0',
-            'mobile' => 'required_without:friend_id,account|string|size:11',
-            'account' => 'required_without:friend_id,mobile|int',
+            'friend_id' => 'required_without_all:mobile,account|int|min:0',
+            'mobile' => 'required_without_all:friend_id,account|string|size:11',
+            'account' => 'required_without_all:friend_id,mobile|int',
         ]);
 
         if ($friendID = $request->input('friend_id')) {
