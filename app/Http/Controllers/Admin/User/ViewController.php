@@ -20,4 +20,10 @@ class ViewController extends Controller
             'user' => $user
         ]);
     }
+
+    public function delete($id)
+    {
+        User::where('id', $id)->delete();
+        return redirect()->to('admin/users');
+    }
 }

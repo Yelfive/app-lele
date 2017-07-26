@@ -9,14 +9,26 @@ namespace App\Http\Controllers\Admin\User;
 
 use App\Http\Controllers\Admin\Controller;
 use App\Models\User;
+use fk\utility\Database\Eloquent\Builder;
+use fk\utility\Http\Request;
 
 class IndexController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $paginator = User::where('deleted', User::DELETED_NO)
-            ->orderBy('id', 'desc')
-            ->paginate(20);
+        /** @var Builder $builder */
+        $builder = User::where('deleted', User::DELETED_NO)
+            ->orderBy('id', 'desc');
+
+        if ($keyword = $request->get('keyword')) {
+            $builder->where(function (Builder $builder) use ($keyword) {
+                $builder->where('mobile', 'like', "%$keyword%")
+                    ->orWhere('nickname', 'like', "%$keyword%")
+                    ->orWhere('account', 'like', "%$keyword%");
+            });
+        }
+
+        $paginator = $builder->paginate(20);
         return view('user.index', [
             'paginator' => $paginator,
         ]);

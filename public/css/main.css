@@ -11,3 +11,16 @@
 .avatar.lg {
     width: 200px;
 }
+
+.hint {
+    font-size: 14px;
+    color: #a2a2a2;
+}
+
+.setting.name {
+    line-height: 36px;
+}
+
+.nav.navbar-top-links.navbar-right {
+    margin-right: 0;
+}

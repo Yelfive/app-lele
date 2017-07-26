@@ -461,6 +461,7 @@ class ComposerStaticInitf47fe1f22316bac2cdb698713d4ae4a4
         'AddDeletedBy2FriendRequest' => __DIR__ . '/../..' . '/database/migrations/2017_07_05_094400_AddDeletedBy2FriendRequest.php',
         'CreateAdmin' => __DIR__ . '/../..' . '/database/migrations/2017_07_25_222956_CreateAdmin.php',
         'CreateFriendRequest' => __DIR__ . '/../..' . '/database/migrations/2017_06_25_172759_CreateFriendRequest.php',
+        'CreateSetting' => __DIR__ . '/../..' . '/database/migrations/2017_07_26_112553_CreateSetting.php',
         'CreateStateCode' => __DIR__ . '/../..' . '/database/migrations/2017_06_06_064212_CreateStateCode.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',

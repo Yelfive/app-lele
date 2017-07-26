@@ -10,16 +10,26 @@
 
 @extends('layouts.main')
 
-@section('title', '用户')
+@section('title', '用户管理')
 
 @section('description', '用户列表')
 
 @section('breadcrumb')
     <li><a href="">Home</a></li>
-    <li class="active">用户管理</li>
 @endsection
 
 @section('content')
+    <form action="" method="get" class="input-group">
+        <input type="text"
+               class="form-control"
+               placeholder="输入手机号/乐乐号/姓名"
+               name="keyword"
+               value="{{$_GET['keyword']??''}}"
+        >
+        <span class="input-group-btn">
+            <button class="btn btn-primary"><i class="fa fa-search"></i>搜索</button>
+        </span>
+    </form>
     <table class="table">
         <thead>
         <tr>

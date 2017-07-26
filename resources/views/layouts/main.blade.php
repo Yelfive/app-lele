@@ -46,7 +46,7 @@
             <a class="navbar-brand" href="/admin/site"><strong><i class="icon fa fa-plane"></i> Home</strong></a>
 
             <div id="sideNav" href="">
-                <i class="fa fa-bars icon"></i>
+                {{--<i class="fa fa-bars icon"></i>--}}
             </div>
         </div>
 
@@ -56,9 +56,9 @@
                     <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                 </a>
                 <ul class="dropdown-menu dropdown-user">
-                    <li><a href="#"><i class="fa fa-user fa-fw"></i>我的资料</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#"><i class="fa fa-sign-out fa-fw"></i>退出登陆</a></li>
+                    {{--<li><a href="#"><i class="fa fa-user fa-fw"></i>我的资料</a></li>--}}
+                    {{--<li class="divider"></li>--}}
+                    <li><a href="/admin/session/delete"><i class="fa fa-sign-out fa-fw"></i>退出登陆</a></li>
                 </ul>
                 <!-- /.dropdown-user -->
             </li>
@@ -69,20 +69,16 @@
     <nav class="navbar-default navbar-side" role="navigation">
         <div class="sidebar-collapse">
             <ul class="nav" id="main-menu">
-                <li>
-                    <a class="active-menu" href="/admin/users"><i class="fa fa-users"></i>用户管理</a>
-                </li>
-                <li>
-                    <a class="" href="/admin/settings"><i class="fa fa-gears">设置</i></a>
-                </li>
-                {{--<li>--}}
-                {{--<a href="#"><i class="fa fa-sitemap"></i> Charts<span class="fa arrow"></span></a>--}}
-                {{--<ul class="nav nav-second-level">--}}
-                {{--<li>--}}
-                {{--<a href="chart.html">Charts JS</a>--}}
-                {{--</li>--}}
-                {{--</ul>--}}
-                {{--</li>--}}
+                @foreach([
+                    ['/admin/users', 'users', '用户管理'],
+                ] as list($url, $icon, $label))
+                    {{--['/admin/settings', 'gears', '系统设置']--}}
+                    <li>
+                        <a @if($url === '/' . Request::path())class="active-menu" @endif href="{{$url}}">
+                            <i class="fa fa-{{$icon}}"></i>{{$label}}
+                        </a>
+                    </li>
+                @endforeach
             </ul>
         </div>
     </nav>
@@ -93,9 +89,12 @@
                 @yield('title')
                 <small>@yield('description')</small>
             </h1>
-            <ol class="breadcrumb">
-                @yield('breadcrumb')
-            </ol>
+            @hasSection('breadcrumb')
+                <ol class="breadcrumb">
+                    @yield('breadcrumb')
+                    <li class="active">@yield('title')</li>
+                </ol>
+            @endif
         </div>
         <div id="page-inner">
             <div>
