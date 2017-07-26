@@ -116,6 +116,13 @@
 <script src="/js/jquery-1.10.2.js"></script>
 <!-- Bootstrap Js -->
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/image-preview/fk.image-preview.js"></script>
+
+<script>
+    $(function () {
+        fk('#page-inner img').imagePreview();
+    });
+</script>
 </body>
 </html>
 
