@@ -44,6 +44,16 @@ class RouteServiceProvider extends ServiceProvider
 
         // Map pay
         Route::namespace($this->namespace)->group(base_path('routes/pay.php'));
+
+        $this->mapAdminRoutes();
+    }
+
+    protected function mapAdminRoutes()
+    {
+        Route::prefix('admin')
+            ->attribute('middleware', 'web')
+            ->namespace($this->namespace . '\Admin')
+            ->group(base_path('routes/admin.php'));
     }
 
     /**

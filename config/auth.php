@@ -44,9 +44,11 @@ return [
         'api' => [
             'driver' => 'easy.token',
             'model' => \App\Models\User::class,
-//            'driver' => 'token',
-//            'provider' => 'users',
         ],
+        'admin' => [
+            'driver' => 'easy.token',
+            'model' => \App\Models\Admin::class,
+        ]
     ],
 
     /*
@@ -67,10 +69,10 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\User::class,
-        ],
+//        'users' => [
+//            'driver' => 'eloquent',
+//            'model' => \App\User::class,
+//        ],
 //        'session' => [
 //            'driver' => 'session',
 //        ],

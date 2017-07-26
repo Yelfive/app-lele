@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddDeletedBy2FriendRequest' => $baseDir . '/database/migrations/2017_07_05_094400_AddDeletedBy2FriendRequest.php',
+    'CreateAdmin' => $baseDir . '/database/migrations/2017_07_25_222956_CreateAdmin.php',
     'CreateFriendRequest' => $baseDir . '/database/migrations/2017_06_25_172759_CreateFriendRequest.php',
     'CreateStateCode' => $baseDir . '/database/migrations/2017_06_06_064212_CreateStateCode.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',

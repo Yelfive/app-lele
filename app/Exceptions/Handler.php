@@ -69,7 +69,7 @@ class Handler extends ExceptionHandler
             return response()->json($result, HttpStatusCode::getStatusCode(HttpStatusCode::CLIENT_UNAUTHORIZED));
         }
 
-        return redirect()->guest(route('login'));
+        return redirect()->guest(route('login.page'));
     }
 
     /**

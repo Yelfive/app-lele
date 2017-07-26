@@ -459,6 +459,7 @@ class ComposerStaticInitf47fe1f22316bac2cdb698713d4ae4a4
 
     public static $classMap = array (
         'AddDeletedBy2FriendRequest' => __DIR__ . '/../..' . '/database/migrations/2017_07_05_094400_AddDeletedBy2FriendRequest.php',
+        'CreateAdmin' => __DIR__ . '/../..' . '/database/migrations/2017_07_25_222956_CreateAdmin.php',
         'CreateFriendRequest' => __DIR__ . '/../..' . '/database/migrations/2017_06_25_172759_CreateFriendRequest.php',
         'CreateStateCode' => __DIR__ . '/../..' . '/database/migrations/2017_06_06_064212_CreateStateCode.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',

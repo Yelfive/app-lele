@@ -1,0 +1,13 @@
+
+#page-inner {
+    overflow: auto;
+    width: 100%;
+}
+
+.avatar.sm {
+    width: 40px;
+}
+
+.avatar.lg {
+    width: 200px;
+}
