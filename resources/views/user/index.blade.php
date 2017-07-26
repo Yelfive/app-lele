@@ -58,4 +58,14 @@
         @endforeach
         </tbody>
     </table>
+    {{$paginator->links()}}
+    <div style="width:150px;">
+        <form method="get" class="input-group">
+            <input type="number" step="1" class="form-control" name="page" value="{{$_GET['page'] ?? 1}}">
+            <span class="input-group-btn">
+                <button class="btn btn-default">跳转</button>
+            </span>
+        </form>
+    </div>
+    </li>
 @endsection

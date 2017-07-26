@@ -28,7 +28,7 @@ class IndexController extends Controller
             });
         }
 
-        $paginator = $builder->paginate(20);
+        $paginator = $builder->paginate($request->get('per_page', 20));
         return view('user.index', [
             'paginator' => $paginator,
         ]);
