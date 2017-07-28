@@ -8,6 +8,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Setting;
+use fk\utility\Http\Request;
 
 class SettingController
 {
@@ -22,12 +23,18 @@ class SettingController
     protected function loadSettings()
     {
         return [
-            ['短信签名', Setting::retrieve('sms_signature'), '平台向用户发布短信时，短信内容的签名. <span style="color: #ff727c">修改该配置前，请先到短信运营商处修改短信签名</span>'],
+            ['app_name', '应用名称', Setting::retrieve('app_name'), '平台发送短信时候，提示的应用名称，如：洛洛'],
+            ['sms_signature', '短信签名', Setting::retrieve('sms_signature'), '平台向用户发布短信时，短信内容的签名. <span style="color: #ff727c">修改该配置前，请先到短信运营商处修改短信签名</span>'],
         ];
     }
 
-    public function set()
+    public function save(Request $request)
     {
-        // todo: unfinished, should be used to create/update setting
+        $settings = $request->input('Settings');
+
+        foreach ($settings as $code => $value) {
+            Setting::store($code, $value);
+        }
+        return redirect()->to('/admin/settings');
     }
 }

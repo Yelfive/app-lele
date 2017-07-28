@@ -23,5 +23,6 @@ Route::group(['middleware' => 'auth:admin'], function () {
     });
 
     Route::get('settings', 'SettingController@display');
+    Route::post('settings/save', 'SettingController@save');
 
 });

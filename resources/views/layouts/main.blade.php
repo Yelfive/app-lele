@@ -71,8 +71,8 @@
             <ul class="nav" id="main-menu">
                 @foreach([
                     ['/admin/users', 'users', '用户管理'],
+                    ['/admin/settings', 'gears', '系统设置'],
                 ] as list($url, $icon, $label))
-                    {{--['/admin/settings', 'gears', '系统设置']--}}
                     <li>
                         <a @if($url === '/' . Request::path())class="active-menu" @endif href="{{$url}}">
                             <i class="fa fa-{{$icon}}"></i>{{$label}}

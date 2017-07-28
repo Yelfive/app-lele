@@ -57,7 +57,7 @@ http://39.108.76.218/api/
     |mobile         |Y          |       | 13512345678
     |password       |Y          |       | 111111
     |verify_code    |Y          |       | 123456, 六位数验证码
-    |nickname       |Y          |       | Felix
+    |nickname       |N          |       | Felix
     |sex            |N          |unknown| male=男,female=女
     |address        |N          |       | 生活地区
     |avatar         |N          |       | 用户头像

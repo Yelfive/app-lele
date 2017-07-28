@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Fields in the table `setting`
@@ -16,6 +17,9 @@ class Setting extends Model
 
     const JSON_YES = 'yes';
     const JSON_NO = 'no';
+
+    const CREATED_AT = null;
+    const UPDATED_AT = null;
 
     /**
      * @var string Name of the table, without prefix
@@ -51,11 +55,17 @@ class Setting extends Model
             $json = static::JSON_NO;
         }
 
-        return static::updateOrInsert([
-            'code' => $code,
-            'json' => $json,
-            'setting' => $value,
-        ]);
+        $exists = static::where('code', $code)->count();
+        if ($exists) {
+            DB::table('setting')->where(['code' => $code])->update(['json' => $json, 'setting' => $value]);
+        } else {
+            static::insert([
+                'code' => $code,
+                'json' => $json,
+                'setting' => $value,
+            ]);
+        }
+
     }
 
 }

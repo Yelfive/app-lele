@@ -18,15 +18,25 @@
 @endsection
 
 @section('content')
-    <table class="table">
-        <tbody>
-        @foreach ($settings as list($name, $value, $hint))
+    <form action="/admin/settings/save" method="post">
+        {{csrf_field()}}
+        <table class="table">
+            <tbody>
+            @foreach ($settings as list($key, $name, $value, $hint))
+                <tr>
+                    <td class="setting name">{{$name}}</td>
+                    <td><input type="text" class="form-control" value="{{$value}}" name="Settings[{{$key}}]"></td>
+                    <td class="hint">{!!$hint!!}</td>
+                </tr>
+            @endforeach
+            </tbody>
+            <tfoot>
             <tr>
-                <td class="setting name">{{$name}}</td>
-                <td><input type="text" class="form-control" value="{{$value}}"></td>
-                <td class="hint">{!!$hint!!}</td>
+                <td colspan="2">
+                    <button class="btn btn-success">保存</button>
+                </td>
             </tr>
-        @endforeach
-        </tbody>
-    </table>
+            </tfoot>
+        </table>
+    </form>
 @endsection

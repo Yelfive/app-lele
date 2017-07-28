@@ -11,9 +11,11 @@ use App\Components\ApiResult;
 use App\Components\HttpStatusCode;
 use App\Components\Messenger;
 use App\Http\Controllers\ApiController;
+use App\Models\Setting;
 use App\Models\User;
 use fk\messenger\SendFailedException;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 
 class VerifyCodeController extends ApiController
@@ -51,6 +53,7 @@ class VerifyCodeController extends ApiController
             try {
                 $messenger->send($mobile, $data);
             } catch (SendFailedException $e) {
+                Log::error($e);
                 return $this->result
                     ->code(HttpStatusCode::SERVER_THIRD_PARTY_ERROR)
                     ->message('验证码获取失败');
@@ -78,13 +81,16 @@ class VerifyCodeController extends ApiController
         if ($this->forge) return $this->generateCode();
 
         $code = $this->generateCode();
-        $app = $this->config['app'];
+
+        $app = Setting::retrieve('app_name', $this->config['app']);
+        $signature = Setting::retrieve('sms_signature', $this->config['signature']);
+        $sign = "【${signature}】";
 
         switch ($scenario) {
             case static::SCENARIO_REGISTER:
-                return "验证码{$code}，您正在注册{$app}，感谢您的支持！";
+                return "{$sign}验证码{$code}，您正在注册{$app}，感谢您的支持！";
             case static::SCENARIO_RESET_PASSWORD:
-                return "验证码{$code}，您正在修改{$app}密码，感谢您的支持！";
+                return "{$sign}验证码{$code}，您正在修改{$app}密码，感谢您的支持！";
         }
     }
 
