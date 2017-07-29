@@ -90,8 +90,10 @@ class RegisterController extends ApiController
         DB::beginTransaction();
         if ($user->validate() && $user->save() && !$user->hasErrors()) {
             DB::commit();
-            $user->saveAvatar($this->request->file('avatar'));
-            $user->update();
+            if ($avatar = $this->request->file('avatar')) {
+                $user->saveAvatar($avatar);
+                $user->update();
+            }
             $this->result
                 ->message('注册成功')
                 ->data($user->getProfile());
