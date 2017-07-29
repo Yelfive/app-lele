@@ -55,7 +55,7 @@ class User extends Model implements Authenticatable
     public function rules()
     {
         return [
-            'nickname' => ['required', 'string', 'max:50'],
+            'nickname' => ['string', 'max:50'],
             'state_code' => ['required', 'string', 'max:10'],
             'mobile' => ['required', 'string', 'max:11', 'unique:user'],
             'avatar' => ['string', 'max:255'],

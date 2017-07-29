@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-use Illuminate\Support\Facades\DB;
 
 /**
  * Fields in the table `setting`
@@ -57,7 +56,7 @@ class Setting extends Model
 
         $exists = static::where('code', $code)->count();
         if ($exists) {
-            DB::table('setting')->where(['code' => $code])->update(['json' => $json, 'setting' => $value]);
+            static::where(['code' => $code])->update(['json' => $json, 'setting' => $value]);
         } else {
             static::insert([
                 'code' => $code,

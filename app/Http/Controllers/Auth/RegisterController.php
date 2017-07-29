@@ -75,6 +75,7 @@ class RegisterController extends ApiController
             'sex' => $this->request->input('sex'),
             'address' => $this->request->input('address'),
             'avatar' => '',
+            'nickname' => '',
             'city_name' => $cityName,
             'city_code' => $cityCode,
         ]), function ($v) {
