@@ -433,7 +433,7 @@ http://39.108.76.218/api/
     }
     ```
 
-# 8. 修改/重置密码
+# 9 修改用户资料
 
 - API: user/profile
 - Method: PUT
@@ -456,7 +456,7 @@ http://39.108.76.218/api/
     }
     ```
 
-# 9. 获取其他用户资料
+# 10. 获取其他用户资料
 
 - API: user/{user_id}/profile
     
@@ -485,7 +485,7 @@ http://39.108.76.218/api/
     is_friend|是否好友，0=否，1=是
 
 
-# 10. 查询附近的人
+# 11. 查询附近的人
 
 - API: friends/nearby
 - Method: GET
@@ -545,7 +545,7 @@ http://39.108.76.218/api/
     ---     |---
     distance|距离，单位:米
 
-# 11. 上传用户地理位置
+# 12. 上传用户地理位置
 
 - API: user/coordinate
 - Method: PUT
@@ -566,7 +566,7 @@ http://39.108.76.218/api/
     }
     ```
     
-# 12. 清空好友请求列表
+# 13. 清空好友请求列表
 
 - API: friends/requests
 
