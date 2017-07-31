@@ -44,6 +44,7 @@ return [
         'api' => [
             'driver' => 'easy.token',
             'model' => \App\Models\User::class,
+            'checkExists' => true, // `count` to check user exists very call
         ],
         'admin' => [
             'driver' => 'easy.token',
